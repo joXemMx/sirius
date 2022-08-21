@@ -76,9 +76,9 @@ jobs:
 
       - name: Sirius Run
         run: |
-          ls
-          cd ..
-          ls
+          ls \
+          cd .. \
+          ls \
 
 #jobs:
 #  distCLI:
