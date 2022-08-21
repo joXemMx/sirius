@@ -77,8 +77,7 @@ jobs:
       - name: Sirius Run
         run: |
           ls \
-          cd .. \
-          ls \
+          pwd
 
 #jobs:
 #  distCLI:
