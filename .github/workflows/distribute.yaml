@@ -75,7 +75,7 @@ jobs:
           arguments: distImage
 
       - name: Sirius Run
-        run: ls && cd .. && ls
+        run: ls
 
 #jobs:
 #  distCLI:
