@@ -74,10 +74,12 @@ jobs:
           build-root-directory: sirius_dist/sirius_cli_single_os
           arguments: distImage
 
-      - name: Sirius Run
-        run: |
-          ls \
-          pwd
+      - run: | 
+          ls
+      - run: | 
+          cd ..
+      - run: |
+          ls          
 
 #jobs:
 #  distCLI:
