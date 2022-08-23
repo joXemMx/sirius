@@ -75,8 +75,7 @@ jobs:
           arguments: distImage
 
       - run: ls
-      - run: cd sirius_dist
-      - run: ls
+      - run: ls sirius_dist
 
 #jobs:
 #  distCLI:
