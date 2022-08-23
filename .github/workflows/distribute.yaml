@@ -76,6 +76,9 @@ jobs:
 
       - run: ls
       - run: ls sirius_dist
+      - run: |
+          ls
+          ls sirius_dist
 
 #jobs:
 #  distCLI:
