@@ -114,7 +114,7 @@ jobs:
         name: Sirius Test
         run: |
           set dir=sirius_cli\src\test\temp_results\
-          if ( exist %dir% ) { echo Found result directory %dir%... } else { echo Error: result directory %dir% not found. Can not continue. && exit 1 }
+          if ( exists %dir% ) { echo Found result directory %dir%... } else { echo Error: result directory %dir% not found. Can not continue. && exit 1 }
 
       - if: matrix.os != 'windows-latest'
         name: Sirius Test
