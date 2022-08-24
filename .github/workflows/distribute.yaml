@@ -112,8 +112,8 @@ jobs:
 
       - if: matrix.os == 'windows-latest'
         name: Sirius Test
-        run: | 
-          if exist sirius_cli\src\test\temp_results\ echo "Found result directory sirius_cli\src\test\temp_results\..." else echo "Error: result directory sirius_cli\src\test\temp_results\ not found. Can not continue." && exit 1
+        run: |
+          IF EXIST Product.dat (del Product.dat) ELSE (echo The Product.dat file is missing.)
 
       - if: matrix.os != 'windows-latest'
         name: Sirius Test
