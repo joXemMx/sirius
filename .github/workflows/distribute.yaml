@@ -84,10 +84,7 @@ jobs:
           mkdir sirius_cli/src/test/temp_results/ms_temp_summary
           mkdir sirius_cli/src/test/temp_results/txt_temp_output
           mkdir sirius_cli/src/test/temp_results/txt_temp_summary
-          ls sirius_cli/src/test/temp_results
           ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe --help
-          rm -r sirius_cli/src/test/temp_results
-          ls sirius_cli/src/test
 
       - if: matrix.os == 'ubuntu-latest'
         name: Sirius Ubuntu Run
@@ -99,10 +96,7 @@ jobs:
           mkdir sirius_cli/src/test/temp_results/ms_temp_summary
           mkdir sirius_cli/src/test/temp_results/txt_temp_output
           mkdir sirius_cli/src/test/temp_results/txt_temp_summary
-          ls sirius_cli/src/test/temp_results
           ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius --help
-          rm -r sirius_cli/src/test/temp_results
-          ls sirius_cli/src/test
 
       - if: matrix.os == 'macos-latest'
         name: Sirius MacOS Run
@@ -114,7 +108,6 @@ jobs:
           mkdir sirius_cli/src/test/temp_results/ms_temp_summary
           mkdir sirius_cli/src/test/temp_results/txt_temp_output
           mkdir sirius_cli/src/test/temp_results/txt_temp_summary
-          ls sirius_cli/src/test/temp_results
           ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius --help          ls sirius_cli/src/test
 
       - name: Sirius Test
