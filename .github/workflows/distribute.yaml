@@ -114,7 +114,11 @@ jobs:
         name: Sirius Test
         run: |
           DIR="sirius_cli/src/test/temp_results"
-          if -d "$DIR" (echo "Found result directory ${DIR}...") else (echo "Error: ${DIR} not found. Can not continue." exit 1)
+          if -d "$DIR" 
+            (echo "Found result directory ${DIR}...") 
+          else 
+            (echo "Error: ${DIR} not found. Can not continue." 
+            exit 1)
 
       - if: matrix.os != 'windows-latest'
         name: Sirius Test
