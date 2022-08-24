@@ -115,9 +115,7 @@ jobs:
           mkdir sirius_cli/src/test/temp_results/txt_temp_output
           mkdir sirius_cli/src/test/temp_results/txt_temp_summary
           ls sirius_cli/src/test/temp_results
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius --help
-          rm -r sirius_cli/src/test/temp_results
-          ls sirius_cli/src/test
+          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius --help          ls sirius_cli/src/test
 
       - name: Sirius Test
         run: |
