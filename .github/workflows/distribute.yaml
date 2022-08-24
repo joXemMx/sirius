@@ -113,11 +113,10 @@ jobs:
       - if: matrix.os == 'windows-latest'
         name: Sirius Test
         run: |
-          DIR="sirius_cli/src/test/temp_results/"
-          if exists "$DIR" 
-            (echo "Found result directory ${DIR}...") 
+          if exists "sirius_cli/src/test/temp_results/" 
+            (echo "Found result directory sirius_cli/src/test/temp_results/...") 
           else 
-            (echo "Error: ${DIR} not found. Can not continue." 
+            (echo "Error: result directory sirius_cli/src/test/temp_results/ not found. Can not continue." 
             exit 1)
 
       - if: matrix.os != 'windows-latest'
@@ -127,7 +126,7 @@ jobs:
           if [ -d "$DIR" ]; then
             echo "Found result directory ${DIR}..."
           else
-            echo "Error: ${DIR} not found. Can not continue."
+            echo "Error: result directory ${DIR} not found. Can not continue."
               exit 1
           fi
 
