@@ -95,9 +95,9 @@ jobs:
           set TXT_DATA_1=%PATH%/sirius_doc/manual/demo-data/txt/chelidonine_ms.txt
           set TXT_DATA_2=%PATH%/sirius_doc/manual/demo-data/txt/chelidonine_msms1.txt
           set TXT_DATA_3=%PATH%/sirius_doc/manual/demo-data/txt/chelidonine_msms2.txt
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe --input %MGF_DATA% --output ./sirius_cli/src/test/temp_results/mgf_temp_output formula -p orbitrap fingerprint structure compound-classes write-summaries --output ./sirius_cli/src/test/temp_results/mgf_temp_summary
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe -1 sirius_doc/manual/demo-data/txt/chelidonine_ms.txt -2 sirius_doc/manual/demo-data/txt/chelidonine_msms1.txt,sirius_doc/manual/demo-data/txt/chelidonine_msms2.txt -z 354.134704589844 -o sirius_cli/src/test/temp_results/txt_temp_output formula -p orbitrap write-summaries --output sirius_cli/src/test/temp_results/txt_temp_summary
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe -o sirius_cli/src/test/temp_results/ms_temp_output -i sirius_doc/manual/demo-data/ms/Bicuculline.ms --ignore-formula formula -p orbitrap -c 5 fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/ms_temp_summary
+          /sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe --input %MGF_DATA% --output sirius_cli/src/test/temp_results/mgf_temp_output formula -p orbitrap fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/mgf_temp_summary
+          /sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe -1 sirius_doc/manual/demo-data/txt/chelidonine_ms.txt -2 sirius_doc/manual/demo-data/txt/chelidonine_msms1.txt,sirius_doc/manual/demo-data/txt/chelidonine_msms2.txt -z 354.134704589844 -o sirius_cli/src/test/temp_results/txt_temp_output formula -p orbitrap write-summaries --output sirius_cli/src/test/temp_results/txt_temp_summary
+          /sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe -o sirius_cli/src/test/temp_results/ms_temp_output -i sirius_doc/manual/demo-data/ms/Bicuculline.ms --ignore-formula formula -p orbitrap -c 5 fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/ms_temp_summary
         shell: cmd
 
       #- if: matrix.os == 'ubuntu-latest'
