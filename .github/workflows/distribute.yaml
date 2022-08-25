@@ -13,7 +13,7 @@ jobs:
   distCLI:
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
     runs-on: ${{ matrix.os }}
     env:
       GENERIC_INSTALLER_CERTIFICATE: ${{ secrets.GENERIC_INSTALLER_CERTIFICATE }}
