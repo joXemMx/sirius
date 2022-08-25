@@ -83,12 +83,12 @@ jobs:
           set TEMP_DIR=sirius_cli\src\test\temp_results
           mkdir %TEMP_DIR% %TEMP_DIR%\mgf_temp_output %TEMP_DIR%\mgf_temp_summary %TEMP_DIR%\ms_temp_output %TEMP_DIR%\ms_temp_summary %TEMP_DIR%\txt_temp_output %TEMP_DIR%\txt_temp_summary
           set DEMO_DIR=%cd%\sirius_doc\manual\demo-data
-          set MGF_DATA=%DEMO_DIR%\mgf\laudanosine.mgf & set MS_DATA=%DEMO_DIR%\ms\Bicuculline.ms & set TXT_DATA_1=%DEMO_DIR%\txt\chelidonine_ms.txt & set TXT_DATA_2=%DEMO_DIR%\txt\chelidonine_msms1.txt & set TXT_DATA_3=%DEMO_DIR%\txt\chelidonine_msms2.txt
+          set MGF_DATA=%DEMO_DIR%\mgf\laudanosine.mgf & set MS_DATA=%DEMO_DIR%\ms\Bicuculline.ms & set TXT_DATA_1=%DEMO_DIR%\txt\chelidonine_ms.txt & set TXT_DATA_2=%DEMO_DIR%\txt\chelidonine_msms1.txt,%DEMO_DIR%\txt\chelidonine_msms2.txt
           set MGF_OUTPUT=%TEMP_DIR%\mgf_temp_output & set MGF_SUMMARY=%TEMP_DIR%\mgf_temp_summary & set MS_OUTPUT=%TEMP_DIR%\ms_temp_output & set MS_SUMMARY=%TEMP_DIR%\ms_temp_summary & set TXT_OUTPUT=%TEMP_DIR%\txt_temp_output & set TXT_SUMMARY=%TEMP_DIR%\txt_temp_summary
           cd sirius_dist\sirius_cli_single_os\build\distributions\sirius
           sirius.exe login --user-env SIRIUS_USER --password-env SIRIUS_PW
           sirius.exe --input %MGF_DATA% --output %MGF_OUTPUT% formula -p orbitrap fingerprint structure compound-classes write-summaries --output %MGF_SUMMARY%
-          sirius.exe -1 %TXT_DATA_1% -2 %TXT_DATA_2%,%TXT_DATA_3% -z 354.134704589844 -o %TXT_OUTPUT% formula -p orbitrap write-summaries --output %TXT_SUMMARY%
+          sirius.exe -1 %TXT_DATA_1% -2 %TXT_DATA_2% -z 354.134704589844 -o %TXT_OUTPUT% formula -p orbitrap write-summaries --output %TXT_SUMMARY%
           sirius.exe -o %MS_OUTPUT% -i %MS_DATA% --ignore-formula formula -p orbitrap -c 5 fingerprint structure compound-classes write-summaries --output %MS_SUMMARY%
         shell: cmd
 
@@ -98,12 +98,12 @@ jobs:
           set TEMP_DIR=sirius_cli\src\test\temp_results
           mkdir %TEMP_DIR% %TEMP_DIR%\mgf_temp_output %TEMP_DIR%\mgf_temp_summary %TEMP_DIR%\ms_temp_output %TEMP_DIR%\ms_temp_summary %TEMP_DIR%\txt_temp_output %TEMP_DIR%\txt_temp_summary
           set DEMO_DIR=%cd%\sirius_doc\manual\demo-data
-          set MGF_DATA=%DEMO_DIR%\mgf\laudanosine.mgf & set MS_DATA=%DEMO_DIR%\ms\Bicuculline.ms & set TXT_DATA_1=%DEMO_DIR%\txt\chelidonine_ms.txt & set TXT_DATA_2=%DEMO_DIR%\txt\chelidonine_msms1.txt & set TXT_DATA_3=%DEMO_DIR%\txt\chelidonine_msms2.txt
+          set MGF_DATA=%DEMO_DIR%\mgf\laudanosine.mgf & set MS_DATA=%DEMO_DIR%\ms\Bicuculline.ms & set TXT_DATA_1=%DEMO_DIR%\txt\chelidonine_ms.txt & set TXT_DATA_2=%DEMO_DIR%\txt\chelidonine_msms1.txt,%DEMO_DIR%\txt\chelidonine_msms2.txt
           set MGF_OUTPUT=%TEMP_DIR%\mgf_temp_output & set MGF_SUMMARY=%TEMP_DIR%\mgf_temp_summary & set MS_OUTPUT=%TEMP_DIR%\ms_temp_output & set MS_SUMMARY=%TEMP_DIR%\ms_temp_summary & set TXT_OUTPUT=%TEMP_DIR%\txt_temp_output & set TXT_SUMMARY=%TEMP_DIR%\txt_temp_summary
           cd sirius_dist\sirius_cli_single_os\build\distributions\sirius\bin
           sirius login --user-env SIRIUS_USER --password-env SIRIUS_PW
           sirius --input %MGF_DATA% --output %MGF_OUTPUT% formula -p orbitrap fingerprint structure compound-classes write-summaries --output %MGF_SUMMARY%
-          sirius -1 %TXT_DATA_1% -2 %TXT_DATA_2%,%TXT_DATA_3% -z 354.134704589844 -o %TXT_OUTPUT% formula -p orbitrap write-summaries --output %TXT_SUMMARY%
+          sirius -1 %TXT_DATA_1% -2 %TXT_DATA_2% -z 354.134704589844 -o %TXT_OUTPUT% formula -p orbitrap write-summaries --output %TXT_SUMMARY%
           sirius -o %MS_OUTPUT% -i %MS_DATA% --ignore-formula formula -p orbitrap -c 5 fingerprint structure compound-classes write-summaries --output %MS_SUMMARY%
 
       - if: matrix.os == 'macos-latest'
@@ -112,12 +112,12 @@ jobs:
           set TEMP_DIR=sirius_cli\src\test\temp_results
           mkdir %TEMP_DIR% %TEMP_DIR%\mgf_temp_output %TEMP_DIR%\mgf_temp_summary %TEMP_DIR%\ms_temp_output %TEMP_DIR%\ms_temp_summary %TEMP_DIR%\txt_temp_output %TEMP_DIR%\txt_temp_summary
           set DEMO_DIR=%cd%\sirius_doc\manual\demo-data
-          set MGF_DATA=%DEMO_DIR%\mgf\laudanosine.mgf & set MS_DATA=%DEMO_DIR%\ms\Bicuculline.ms & set TXT_DATA_1=%DEMO_DIR%\txt\chelidonine_ms.txt & set TXT_DATA_2=%DEMO_DIR%\txt\chelidonine_msms1.txt & set TXT_DATA_3=%DEMO_DIR%\txt\chelidonine_msms2.txt
+          set MGF_DATA=%DEMO_DIR%\mgf\laudanosine.mgf & set MS_DATA=%DEMO_DIR%\ms\Bicuculline.ms & set TXT_DATA_1=%DEMO_DIR%\txt\chelidonine_ms.txt & set TXT_DATA_2=%DEMO_DIR%\txt\chelidonine_msms1.txt,%DEMO_DIR%\txt\chelidonine_msms2.txt
           set MGF_OUTPUT=%TEMP_DIR%\mgf_temp_output & set MGF_SUMMARY=%TEMP_DIR%\mgf_temp_summary & set MS_OUTPUT=%TEMP_DIR%\ms_temp_output & set MS_SUMMARY=%TEMP_DIR%\ms_temp_summary & set TXT_OUTPUT=%TEMP_DIR%\txt_temp_output & set TXT_SUMMARY=%TEMP_DIR%\txt_temp_summary
           cd sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS
           sirius login --user-env SIRIUS_USER --password-env SIRIUS_PW
           sirius --input %MGF_DATA% --output %MGF_OUTPUT% formula -p orbitrap fingerprint structure compound-classes write-summaries --output %MGF_SUMMARY%
-          sirius -1 %TXT_DATA_1% -2 %TXT_DATA_2%,%TXT_DATA_3% -z 354.134704589844 -o %TXT_OUTPUT% formula -p orbitrap write-summaries --output %TXT_SUMMARY%
+          sirius -1 %TXT_DATA_1% -2 %TXT_DATA_2% -z 354.134704589844 -o %TXT_OUTPUT% formula -p orbitrap write-summaries --output %TXT_SUMMARY%
           sirius -o %MS_OUTPUT% -i %MS_DATA% --ignore-formula formula -p orbitrap -c 5 fingerprint structure compound-classes write-summaries --output %MS_SUMMARY%
 
       - name: Sirius MGF Test
