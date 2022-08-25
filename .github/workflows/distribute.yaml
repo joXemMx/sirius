@@ -7,7 +7,7 @@ on:
 #      - stable-service-api
     paths-ignore:
       - '**/README.md'
-      - 'sirius_doc/**/*'
+#      - 'sirius_doc/**/*'
 
 jobs:
   distCLI:
@@ -21,8 +21,8 @@ jobs:
       MACOS_IDENTITY_ID: ${{ secrets.MACOS_IDENTITY_ID }}
       MACOS_APPLE_ID: ${{ secrets.MACOS_APPLE_ID }}
       MACOS_APPLE_ID_PW: ${{ secrets.MACOS_APPLE_ID_PW }}
-      SIRIUS_USER: secrets.SIRIUS_USER
-      SIRIUS_PW: secrets.SIRIUS_PW
+      SIRIUS_USER: ${{ secrets.SIRIUS_USER }}
+      SIRIUS_PW: ${{ secrets.SIRIUS_PW }}
       #          LINUX_INSTALLER_CERTIFICATE_FILE: ${{ steps.generic_codesign_cert.outputs.filePath }}
     steps:
       - uses: actions/checkout@v2
@@ -80,7 +80,7 @@ jobs:
       - if: matrix.os == 'windows-latest'
         name: Sirius Windows Run
         run: |
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe login --user-env env.SIRIUS_USER --password-env env.SIRIUS_PW
+          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe login --user-env SIRIUS_USER --password-env SIRIUS_PW
           mkdir sirius_cli/src/test/temp_results
           mkdir sirius_cli/src/test/temp_results/mgf_temp_output
           mkdir sirius_cli/src/test/temp_results/mgf_temp_summary
@@ -131,9 +131,7 @@ jobs:
           CANOPUS_NPC="${OUTPUT}canopus_npc/"
           FINGERPRINTS="${OUTPUT}fingerprints/"
           FINGER_ID="${OUTPUT}fingerprints/"
-          echo "${FINGER_ID}"
           DIRS=(${SUMMARY} ${OUTPUT} ${CANOPUS} ${CANOPUS_NPC} ${FINGERPRINTS} ${FINGER_ID})
-          echo "${DIRS}"
           for DIR in "${DIRS[@]}" ; do
             if [ -d "${DIR}" ]; then
               echo "Found result directory ${DIR}..."
