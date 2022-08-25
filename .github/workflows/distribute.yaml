@@ -78,7 +78,7 @@ jobs:
       - if: matrix.os == 'windows-latest'
         name: Sirius Windows Run
         run: |
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe login --user-env SIRIUS_USER --password-env SIRIUS_PW    
+          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe login --user-env ${{ secrets.SIRIUS_USER }} --password-env  ${{ secrets.SIRIUS_PW }}    
           mkdir sirius_cli/src/test/temp_results
           mkdir sirius_cli/src/test/temp_results/mgf_temp_output
           mkdir sirius_cli/src/test/temp_results/mgf_temp_summary
@@ -93,7 +93,7 @@ jobs:
       - if: matrix.os == 'ubuntu-latest'
         name: Sirius Ubuntu Run
         run: |
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius login --user-env SIRIUS_USER --password-env SIRIUS_PW
+          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius login --user-env ${{ secrets.SIRIUS_USER }} --password-env  ${{ secrets.SIRIUS_PW }}
           mkdir sirius_cli/src/test/temp_results
           mkdir sirius_cli/src/test/temp_results/mgf_temp_output
           mkdir sirius_cli/src/test/temp_results/mgf_temp_summary
@@ -108,7 +108,7 @@ jobs:
       - if: matrix.os == 'macos-latest'
         name: Sirius MacOS Run
         run: |
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius login --user-env SIRIUS_USER --password-env SIRIUS_PW
+          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius login --user-env ${{ secrets.SIRIUS_USER }} --password-env  ${{ secrets.SIRIUS_PW }}
           mkdir sirius_cli/src/test/temp_results
           mkdir sirius_cli/src/test/temp_results/mgf_temp_output
           mkdir sirius_cli/src/test/temp_results/mgf_temp_summary
@@ -284,7 +284,7 @@ jobs:
       - if: matrix.os == 'windows-latest'
         name: Sirius Windows Run
         run: |
-          ./sirius_dist/sirius_service_single_os/build/distributions/sirius/sirius.exe login --user-env SIRIUS_USER --password-env SIRIUS_PW    
+          ./sirius_dist/sirius_service_single_os/build/distributions/sirius/sirius.exe login --user-env ${{ secrets.SIRIUS_USER }} --password-env  ${{ secrets.SIRIUS_PW }}   
           mkdir sirius_cli/src/test/temp_results
           mkdir sirius_cli/src/test/temp_results/mgf_temp_output
           mkdir sirius_cli/src/test/temp_results/mgf_temp_summary
@@ -299,7 +299,7 @@ jobs:
       - if: matrix.os == 'ubuntu-latest'
         name: Sirius Ubuntu Run
         run: |
-          ./sirius_dist/sirius_service_single_os/build/distributions/sirius/bin/sirius login --user-env SIRIUS_USER --password-env SIRIUS_PW
+          ./sirius_dist/sirius_service_single_os/build/distributions/sirius/bin/sirius login --user-env ${{ secrets.SIRIUS_USER }} --password-env  ${{ secrets.SIRIUS_PW }}
           mkdir sirius_cli/src/test/temp_results
           mkdir sirius_cli/src/test/temp_results/mgf_temp_output
           mkdir sirius_cli/src/test/temp_results/mgf_temp_summary
@@ -314,7 +314,7 @@ jobs:
       - if: matrix.os == 'macos-latest'
         name: Sirius MacOS Run
         run: |
-          ./sirius_dist/sirius_service_single_os/build/distributions/sirius.app/Contents/MacOS/sirius login --user-env SIRIUS_USER --password-env SIRIUS_PW
+          ./sirius_dist/sirius_service_single_os/build/distributions/sirius.app/Contents/MacOS/sirius login --user-env ${{ secrets.SIRIUS_USER }} --password-env  ${{ secrets.SIRIUS_PW }}
           mkdir sirius_cli/src/test/temp_results
           mkdir sirius_cli/src/test/temp_results/mgf_temp_output
           mkdir sirius_cli/src/test/temp_results/mgf_temp_summary
@@ -483,7 +483,7 @@ jobs:
       - if: matrix.os == 'windows-latest'
         name: Sirius Windows Run
         run: |
-          ./sirius_dist/sirius_gui_single_os/build/distributions/sirius/sirius.exe login --user-env SIRIUS_USER --password-env SIRIUS_PW    
+          ./sirius_dist/sirius_gui_single_os/build/distributions/sirius/sirius.exe login --user-env ${{ secrets.SIRIUS_USER }} --password-env  ${{ secrets.SIRIUS_PW }}   
           mkdir sirius_cli/src/test/temp_results
           mkdir sirius_cli/src/test/temp_results/mgf_temp_output
           mkdir sirius_cli/src/test/temp_results/mgf_temp_summary
@@ -498,7 +498,7 @@ jobs:
       - if: matrix.os == 'ubuntu-latest'
         name: Sirius Ubuntu Run
         run: |
-          ./sirius_dist/sirius_gui_single_os/build/distributions/sirius/bin/sirius login --user-env SIRIUS_USER --password-env SIRIUS_PW
+          ./sirius_dist/sirius_gui_single_os/build/distributions/sirius/bin/sirius login --user-env ${{ secrets.SIRIUS_USER }} --password-env  ${{ secrets.SIRIUS_PW }}
           mkdir sirius_cli/src/test/temp_results
           mkdir sirius_cli/src/test/temp_results/mgf_temp_output
           mkdir sirius_cli/src/test/temp_results/mgf_temp_summary
@@ -513,7 +513,7 @@ jobs:
       - if: matrix.os == 'macos-latest'
         name: Sirius MacOS Run
         run: |
-          ./sirius_dist/sirius_gui_single_os/build/distributions/sirius.app/Contents/MacOS/sirius login --user-env SIRIUS_USER --password-env SIRIUS_PW
+          ./sirius_dist/sirius_gui_single_os/build/distributions/sirius.app/Contents/MacOS/sirius login --user-env ${{ secrets.SIRIUS_USER }} --password-env  ${{ secrets.SIRIUS_PW }}
           mkdir sirius_cli/src/test/temp_results
           mkdir sirius_cli/src/test/temp_results/mgf_temp_output
           mkdir sirius_cli/src/test/temp_results/mgf_temp_summary
