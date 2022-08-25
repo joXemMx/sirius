@@ -89,7 +89,7 @@ jobs:
           mkdir sirius_cli/src/test/temp_results/txt_temp_output
           mkdir sirius_cli/src/test/temp_results/txt_temp_summary
           set PATH=%cd%
-          echo $PATH
+          echo %PATH%
           set MGF_DATA=%PATH%/sirius_doc/manual/demo-data/mgf/laudanosine.mgf
           set MS_DATA=%PATH%/sirius_doc/manual/demo-data/ms/Bicuculline.ms
           set TXT_DATA_1=%PATH%/sirius_doc/manual/demo-data/txt/chelidonine_ms.txt
