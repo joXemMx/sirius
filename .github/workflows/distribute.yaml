@@ -21,8 +21,8 @@ jobs:
       MACOS_IDENTITY_ID: ${{ secrets.MACOS_IDENTITY_ID }}
       MACOS_APPLE_ID: ${{ secrets.MACOS_APPLE_ID }}
       MACOS_APPLE_ID_PW: ${{ secrets.MACOS_APPLE_ID_PW }}
-      SIRIUS_USER: ${{ secrets.SIRIUS_USER }}
-      SIRIUS_PW: ${{ secrets.SIRIUS_PW }}
+      SIRIUS_USER: secrets.SIRIUS_USER
+      SIRIUS_PW: secrets.SIRIUS_PW
       #          LINUX_INSTALLER_CERTIFICATE_FILE: ${{ steps.generic_codesign_cert.outputs.filePath }}
     steps:
       - uses: actions/checkout@v2
