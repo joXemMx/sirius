@@ -77,6 +77,7 @@ jobs:
       - if: matrix.os == 'windows-latest'
         name: Sirius Windows Run
         run: |
+          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe login --user-env SIRIUS_USER --password-env SIRIUS_PW    
           mkdir sirius_cli/src/test/temp_results
           mkdir sirius_cli/src/test/temp_results/mgf_temp_output
           mkdir sirius_cli/src/test/temp_results/mgf_temp_summary
@@ -85,10 +86,13 @@ jobs:
           mkdir sirius_cli/src/test/temp_results/txt_temp_output
           mkdir sirius_cli/src/test/temp_results/txt_temp_summary
           ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe --input sirius_doc/manual/demo-data/mgf/laudanosine.mgf --output sirius_cli/src/test/temp_results/mgf_temp_output formula -p orbitrap fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/mgf_temp_summary
+          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe -1 sirius_doc/manual/demo-data/txt/chelidonine_ms.txt -2 sirius_doc/manual/demo-data/txt/chelidonine_msms1.txt,sirius_doc/manual/demo-data/txt/chelidonine_msms2.txt -z 354.134704589844 -o sirius_cli/src/test/temp_results/txt_temp_output formula -p orbitrap write-summaries --output sirius_cli/src/test/temp_results/txt_temp_summary
+          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe -o sirius_cli/src/test/temp_results/ms_temp_output -i sirius_doc/manual/demo-data/ms/Bicuculline.ms --ignore-formula formula -p orbitrap -c 5 fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/ms_temp_summary
 
       - if: matrix.os == 'ubuntu-latest'
         name: Sirius Ubuntu Run
         run: |
+          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius login --user-env SIRIUS_USER --password-env SIRIUS_PW
           mkdir sirius_cli/src/test/temp_results
           mkdir sirius_cli/src/test/temp_results/mgf_temp_output
           mkdir sirius_cli/src/test/temp_results/mgf_temp_summary
@@ -97,10 +101,13 @@ jobs:
           mkdir sirius_cli/src/test/temp_results/txt_temp_output
           mkdir sirius_cli/src/test/temp_results/txt_temp_summary
           ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius --input sirius_doc/manual/demo-data/mgf/laudanosine.mgf --output sirius_cli/src/test/temp_results/mgf_temp_output formula -p orbitrap fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/mgf_temp_summary
+          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius -1 sirius_doc/manual/demo-data/txt/chelidonine_ms.txt -2 sirius_doc/manual/demo-data/txt/chelidonine_msms1.txt,sirius_doc/manual/demo-data/txt/chelidonine_msms2.txt -z 354.134704589844 -o sirius_cli/src/test/temp_results/txt_temp_output formula -p orbitrap write-summaries --output sirius_cli/src/test/temp_results/txt_temp_summary
+          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius -o sirius_cli/src/test/temp_results/ms_temp_output -i sirius_doc/manual/demo-data/ms/Bicuculline.ms --ignore-formula formula -p orbitrap -c 5 fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/ms_temp_summary
 
       - if: matrix.os == 'macos-latest'
         name: Sirius MacOS Run
         run: |
+          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius login --user-env SIRIUS_USER --password-env SIRIUS_PW
           mkdir sirius_cli/src/test/temp_results
           mkdir sirius_cli/src/test/temp_results/mgf_temp_output
           mkdir sirius_cli/src/test/temp_results/mgf_temp_summary
@@ -109,6 +116,8 @@ jobs:
           mkdir sirius_cli/src/test/temp_results/txt_temp_output
           mkdir sirius_cli/src/test/temp_results/txt_temp_summary
           ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius --input sirius_doc/manual/demo-data/mgf/laudanosine.mgf --output sirius_cli/src/test/temp_results/mgf_temp_output formula -p orbitrap fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/mgf_temp_summary
+          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius -1 sirius_doc/manual/demo-data/txt/chelidonine_ms.txt -2 sirius_doc/manual/demo-data/txt/chelidonine_msms1.txt,sirius_doc/manual/demo-data/txt/chelidonine_msms2.txt -z 354.134704589844 -o sirius_cli/src/test/temp_results/txt_temp_output formula -p orbitrap write-summaries --output sirius_cli/src/test/temp_results/txt_temp_summary
+          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius -o sirius_cli/src/test/temp_results/ms_temp_output -i sirius_doc/manual/demo-data/ms/Bicuculline.ms --ignore-formula formula -p orbitrap -c 5 fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/ms_temp_summary
 
       - name: Sirius MGF Test
         run: |
@@ -126,9 +135,9 @@ jobs:
             if [ -d "${DIR}" ]; then
               echo "Found result directory ${DIR}..."
               if [ "$(ls -A ${DIR})" ]; then
-                echo "${DIR} has results."
+                echo "${DIR} is not empty."
               else
-                echo "Error: ${DIR} is Empty."
+                echo "Error: ${DIR} is empty."
                 exit 1
               fi
             else
@@ -137,6 +146,56 @@ jobs:
             fi
           done
         shell: bash
+
+      - name: Sirius MS Test
+        run: |
+          RESULTS="sirius_cli/src/test/temp_results/"
+          OUTPUT="${RESULTS}ms_temp_output/1_Bicuculline_Bicuculline/"
+          SUMMARY="${RESULTS}ms_temp_summary/1_Bicuculline_Bicuculline/"
+          CANOPUS="${OUTPUT}canopus/"
+          CANOPUS_NPC="${OUTPUT}canopus_npc/"
+          FINGERPRINTS="${OUTPUT}fingerprints/"
+          FINGER_ID="${OUTPUT}fingerprints/"
+          echo "${FINGER_ID}"
+          DIRS=(${SUMMARY} ${OUTPUT} ${CANOPUS} ${CANOPUS_NPC} ${FINGERPRINTS} ${FINGER_ID})
+          echo "${DIRS}"
+          for DIR in "${DIRS[@]}" ; do
+            if [ -d "${DIR}" ]; then
+              echo "Found result directory ${DIR}..."
+              if [ "$(ls -A ${DIR})" ]; then
+                echo "${DIR} is not empty."
+              else
+                echo "Error: ${DIR} is empty."
+                exit 1
+              fi
+            else
+              echo "Error: result directory ${DIR} not found."
+              exit 1
+            fi
+          done
+        shell: bash
+
+      - name: Sirius TXT Test
+        run: |
+          RESULTS="sirius_cli/src/test/temp_results/"
+          SUMMARY="${RESULTS}txt_temp_summary/1_Bicuculline_Bicuculline/"
+          if [ -d "${SUMMARY}" ]; then
+            echo "Found result directory ${SUMMARY}..."
+            if [ "$(ls -A ${SUMMARY})" ]; then
+              echo "${SUMMARY} is not empty."
+            else
+              echo "Error: ${SUMMARY} is empty."
+              exit 1
+            fi
+          else
+            echo "Error: result directory ${SUMMARY} not found."
+            exit 1
+          fi
+        shell: bash
+
+      - name: Sirius Run Cleanup
+        run: |
+          rm -r sirius_cli/src/test/temp_results
 
 
 
