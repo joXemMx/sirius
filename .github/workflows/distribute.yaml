@@ -80,7 +80,7 @@ jobs:
       - if: matrix.os == 'windows-latest'
         name: Sirius Windows Run
         run: |
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe login --user-env SIRIUS_USER --password-env SIRIUS_PW
+          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe login --user-env env.SIRIUS_USER --password-env env.SIRIUS_PW
           mkdir sirius_cli/src/test/temp_results
           mkdir sirius_cli/src/test/temp_results/mgf_temp_output
           mkdir sirius_cli/src/test/temp_results/mgf_temp_summary
