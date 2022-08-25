@@ -22,8 +22,6 @@ jobs:
       MACOS_APPLE_ID: ${{ secrets.MACOS_APPLE_ID }}
       MACOS_APPLE_ID_PW: ${{ secrets.MACOS_APPLE_ID_PW }}
       #          LINUX_INSTALLER_CERTIFICATE_FILE: ${{ steps.generic_codesign_cert.outputs.filePath }}
-      SIRIUS_USER: ${{ secrets.SIRIUS_USER }}
-      SIRIUS_PW: ${{ secrets.SIRIUS_PW }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Zulu JDK
@@ -80,7 +78,7 @@ jobs:
       - if: matrix.os == 'windows-latest'
         name: Sirius Windows Run
         run: |
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe login --user-env ${{ env.SIRIUS_USER }} --password-env  ${{ env.SIRIUS_PW }}    
+          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe login --user-env secrets.SIRIUS_USER --password-env secrets.SIRIUS_PW    
           mkdir sirius_cli/src/test/temp_results
           mkdir sirius_cli/src/test/temp_results/mgf_temp_output
           mkdir sirius_cli/src/test/temp_results/mgf_temp_summary
