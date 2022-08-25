@@ -68,7 +68,7 @@ public class InputFilesOptions {
 
         @CommandLine.Option(names = {"--input", "-i"}, description = "Specify the input in multi-compound input formats: Preprocessed mass spectra in .ms or .mgf file format, " +
                 "LC/MS runs in .mzML/.mzXml format or already existing SIRIUS project-spaces (uncompressed/compressed) but also any other file type e.g. to provide input for STANDALONE tools.", required = true, split = ",", order = 321)
-        protected void setInputPath(List<Path> files) {
+        public void setInputPath(List<Path> files) {
             msParserfiles.clear();
             projects.clear();
             unknownFiles.clear();
@@ -76,6 +76,9 @@ public class InputFilesOptions {
         }
 
         @CommandLine.Option(names = {"--ignore-formula"}, description = "ignore given molecular formula if present in .ms or .mgf input files.", defaultValue = "false", order = 322)
+        public void setIgnoreFormula(boolean ignoreFormula){
+            this.ignoreFormula = ignoreFormula;
+        }
         private boolean ignoreFormula;
 
         public boolean isIgnoreFormula() {
@@ -83,6 +86,9 @@ public class InputFilesOptions {
         }
 
         @CommandLine.Option(names = {"--allow-ms1-only"}, description = "Allow MS1 only data to be imported.", defaultValue = "false", order = 323)
+        public void setAllowMS1Only(boolean allowMS1Only){
+            this.allowMS1Only = allowMS1Only;
+        }
         private boolean allowMS1Only;
 
         public boolean isAllowMS1Only() {

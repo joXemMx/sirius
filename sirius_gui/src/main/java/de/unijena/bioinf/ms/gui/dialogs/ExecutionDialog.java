@@ -21,16 +21,10 @@
 package de.unijena.bioinf.ms.gui.dialogs;
 
 import de.unijena.bioinf.jjobs.LoadingBackroundTask;
-import de.unijena.bioinf.ms.frontend.Run;
-import de.unijena.bioinf.ms.frontend.subtools.config.DefaultParameterConfigLoader;
-import de.unijena.bioinf.ms.frontend.subtools.gui.GuiComputeRoot;
-import de.unijena.bioinf.ms.frontend.workflow.WorkflowBuilder;
-import de.unijena.bioinf.ms.frontend.workfow.GuiInstanceBufferFactory;
+import de.unijena.bioinf.ms.frontend.subtools.InputFilesOptions;
 import de.unijena.bioinf.ms.gui.compute.SubToolConfigPanel;
 import de.unijena.bioinf.ms.gui.compute.jjobs.Jobs;
 import de.unijena.bioinf.ms.gui.logging.TextAreaJJobContainer;
-import de.unijena.bioinf.ms.gui.mainframe.MainFrame;
-import de.unijena.bioinf.ms.properties.PropertyManager;
 import de.unijena.bioinf.projectspace.InstanceBean;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -38,10 +32,11 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static de.unijena.bioinf.ms.gui.mainframe.MainFrame.MF;
 
@@ -152,25 +147,25 @@ public class ExecutionDialog<P extends SubToolConfigPanel<?>> extends JDialog {
     protected void execute() {
         dispose();
         try {
-            final DefaultParameterConfigLoader configOptionLoader = new DefaultParameterConfigLoader(PropertyManager.DEFAULTS.newIndependentInstance("COMPUTE"));
-            final WorkflowBuilder<GuiComputeRoot> wfBuilder = new WorkflowBuilder<>(new GuiComputeRoot(MF.ps(), compounds), configOptionLoader, new GuiInstanceBufferFactory());
-            if (nonCompoundInput != null)
-                wfBuilder.rootOptions.setNonCompoundInput(nonCompoundInput);
-
-            final Run computation = new Run(wfBuilder);
             List<String> command = new ArrayList<>();
             command.add(configPanel.toolCommand());
             command.addAll(configPanel.asParameterList());
 
-            computation.parseArgs(command.toArray(String[]::new));
+            final TextAreaJJobContainer<Boolean> j = Jobs.runCommand(command, compounds, getInputFilesOptions(), configPanel.toolCommand());
+            LoadingBackroundTask.connectToJob(this.getOwner() != null ? this.getOwner() : MF, "Running '" + configPanel.toolCommand() + "'...", indeterminateProgress, j);
 
-            if (computation.isWorkflowDefined()) {
-                final TextAreaJJobContainer<Boolean> j = Jobs.runWorkflow(computation.getFlow(), compounds == null ? List.of() : compounds, command, configPanel.toolCommand());
-                LoadingBackroundTask.connectToJob(this.getOwner() != null ? this.getOwner() : MF, "Running '" + configPanel.toolCommand() + "'...", indeterminateProgress, j);
-            }
         } catch (Exception e) {
             LoggerFactory.getLogger(getClass()).error("Error when running '" + configPanel.toolCommand() + "'.", e);
             new ExceptionDialog(MF, e.getMessage());
         }
+    }
+
+    private InputFilesOptions getInputFilesOptions() {
+        if (nonCompoundInput == null)
+            return null;
+        InputFilesOptions inputFiles = new InputFilesOptions();
+        Map<Path, Integer> map = nonCompoundInput.stream().sequential().collect(Collectors.toMap(k -> k, k -> (int) k.toFile().length()));
+        inputFiles.msInput = new InputFilesOptions.MsInput(null, null, map);
+        return inputFiles;
     }
 }

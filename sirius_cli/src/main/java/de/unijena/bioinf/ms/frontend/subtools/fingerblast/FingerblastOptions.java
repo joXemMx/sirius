@@ -47,7 +47,7 @@ import java.util.function.Consumer;
  *
  * @author Markus Fleischauer (markus.fleischauer@gmail.com)
  */
-@CommandLine.Command(name = "structure", aliases = {"search-structure-db", "S"}, description = "<COMPOUND_TOOL> Search in molecular structure db for each compound Individually using CSI:FingerID structure database search.", versionProvider = Provide.Versions.class, mixinStandardHelpOptions = true, showDefaultValues = true)
+@CommandLine.Command(name = "structure", aliases = {"search-structure-db"}, description = "<COMPOUND_TOOL> Search in molecular structure db for each compound Individually using CSI:FingerID structure database search.", versionProvider = Provide.Versions.class, mixinStandardHelpOptions = true, showDefaultValues = true)
 public class FingerblastOptions implements ToolChainOptions<FingerblastSubToolJob, InstanceJob.Factory<FingerblastSubToolJob>> {
     protected final DefaultParameterConfigLoader defaultConfigOptions;
 
@@ -74,7 +74,7 @@ public class FingerblastOptions implements ToolChainOptions<FingerblastSubToolJo
         defaultConfigOptions.changeOption("StructurePredictors", predictors);
     }
 
-    @Option(names = {"-l", "flag-lipids", "--elgordo"}, descriptionKey = "InjectElGordoCompounds", description = {"Tag candidates that are matching lipid class determined by El Gordo in CSI:FingerID candidate list."})
+    @Option(names = {"-l", "tag-lipids", "flag-lipids", "--elgordo"}, descriptionKey = "InjectElGordoCompounds", description = {"Tag candidates that are matching lipid class determined by El Gordo in CSI:FingerID candidate list."})
     public void setInjectElGordoCompounds(DefaultParameter value) throws Exception {
         defaultConfigOptions.changeOption("InjectElGordoCompounds", value);
     }
