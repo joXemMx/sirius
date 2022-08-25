@@ -120,7 +120,7 @@ jobs:
           FINGERPRINTS="${OUTPUT}fingerprints/"
           FINGER_ID="${OUTPUT}fingerprints/"
           echo "${FINGER_ID}"
-          DIRS=(${SUMMARY}, ${OUTPUT}, ${CANOPUS}, ${CANOPUS_NPC}, ${FINGERPRINTS}, ${FINGER_ID})
+          DIRS=(${SUMMARY} ${OUTPUT} ${CANOPUS} ${CANOPUS_NPC} ${FINGERPRINTS} ${FINGER_ID})
           echo "${DIRS}"
           for DIR in "${DIRS[@]}"; do
             if [ -d "${DIR}" ]; then
