@@ -84,7 +84,7 @@ jobs:
           mkdir sirius_cli/src/test/temp_results/ms_temp_summary
           mkdir sirius_cli/src/test/temp_results/txt_temp_output
           mkdir sirius_cli/src/test/temp_results/txt_temp_summary
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe --help
+          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe --input sirius_doc/manual/demo-data/mgf/laudanosine.mgf --output sirius_cli/src/test/temp_results/mgf_temp_output formula -p orbitrap fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/mgf_temp_summary
 
       - if: matrix.os == 'ubuntu-latest'
         name: Sirius Ubuntu Run
@@ -96,7 +96,7 @@ jobs:
           mkdir sirius_cli/src/test/temp_results/ms_temp_summary
           mkdir sirius_cli/src/test/temp_results/txt_temp_output
           mkdir sirius_cli/src/test/temp_results/txt_temp_summary
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius --help
+          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius --input sirius_doc/manual/demo-data/mgf/laudanosine.mgf --output sirius_cli/src/test/temp_results/mgf_temp_output formula -p orbitrap fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/mgf_temp_summary
 
       - if: matrix.os == 'macos-latest'
         name: Sirius MacOS Run
@@ -108,17 +108,32 @@ jobs:
           mkdir sirius_cli/src/test/temp_results/ms_temp_summary
           mkdir sirius_cli/src/test/temp_results/txt_temp_output
           mkdir sirius_cli/src/test/temp_results/txt_temp_summary
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius --help          ls sirius_cli/src/test
+          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius --input sirius_doc/manual/demo-data/mgf/laudanosine.mgf --output sirius_cli/src/test/temp_results/mgf_temp_output formula -p orbitrap fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/mgf_temp_summary
 
-      - name: Sirius Test
+      - name: Sirius MGF Test
         run: |
-          DIR="sirius_cli/src/test/temp_results"
-          if [ -d "$DIR" ]; then
-            echo "Found result directory ${DIR}..."
-          else
-            echo "Error: result directory ${DIR} not found. Can not continue."
+          RESULTS="sirius_cli/src/test/temp_results/"
+          OUTPUT="${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/"
+          SUMMARY="${RESULTS}mgf_temp_summary/1_laudanosine_FEATURE_1/"
+          CANOPUS="${OUTPUT}canopus/"
+          CANOPUS_NPC="${OUTPUT}canopus_npc/"
+          FINGERPRINTS="${OUTPUT}fingerprints/"
+          FINGER_ID="${OUTPUT}fingerprints/"
+          DIRS=(${SUMMARY}, ${OUTPUT}, ${CANOPUS}, ${CANOPUS_NPC}, ${FINGERPRINTS}, ${FINGER_ID})
+          for DIR in "${DIRS[@]}"; do
+            if [ -d "${DIR}" ]; then
+              echo "Found result directory ${DIR}..."
+              if [ "$(ls -A ${DIR})" ]; then
+                echo "$DIR has results."
+              else
+                echo "Error: $DIR is Empty."
+                exit 1
+              fi
+            else
+              echo "Error: result directory ${DIR} not found."
               exit 1
-          fi
+            fi
+          done
         shell: bash
 
 #jobs:
