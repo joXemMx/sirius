@@ -119,8 +119,7 @@ jobs:
           else
             echo "Error: result directory ${DIR} not found. Can not continue."
               exit 1
-          fi 
-          | bash
+          fi
         shell: bash
 
       - if: matrix.os != 'windows-latest'
