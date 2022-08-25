@@ -75,12 +75,12 @@ jobs:
         with:
           gradle-version: 6.9
           build-root-directory: sirius_dist/sirius_cli_single_os
-          arguments: clean publishSiriusPublicationToMavenLocal -P "de.unijena.bioinf.build.MACOS_APP_IDENTITY_ID=${{ secrets.MACOS_APP_IDENTITY_ID }}" -P "de.unijena.bioinf.build.MACOS_IDENTITY_ID=${{ secrets.MACOS_IDENTITY_ID }}" -P "de.unijena.bioinf.build.MACOS_APPLE_ID=${{ secrets.MACOS_APPLE_ID }}" -P "de.unijena.bioinf.build.WIN_INSTALLER_CERTIFICATE_FILE=${{ steps.generic_codesign_cert.outputs.filePath }}"  -P "de.unijena.bioinf.WIN_INSTALLER_CERTIFICATE_PW=${{ secrets.GENERIC_INSTALLER_CERTIFICATE_PW }}" -P "de.unijena.bioinf.WIN_INSTALLER_CERTIFICATE_TIMESTAMP_URL=${{ secrets.GENERIC_INSTALLER_CERTIFICATE_TIMESTAMP_URL }}"
+          arguments: distImage
 
       - if: matrix.os == 'windows-latest'
         name: Sirius Windows Run
         run: |
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe login -u ${{ env.SIRIUS_USER }} -p  ${{ env.SIRIUS_PW }}    
+          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe login -u "${{ env.SIRIUS_USER }}" -p "${{ env.SIRIUS_PW }}"    
           mkdir sirius_cli/src/test/temp_results
           mkdir sirius_cli/src/test/temp_results/mgf_temp_output
           mkdir sirius_cli/src/test/temp_results/mgf_temp_summary
@@ -92,35 +92,35 @@ jobs:
           ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe -1 sirius_doc/manual/demo-data/txt/chelidonine_ms.txt -2 sirius_doc/manual/demo-data/txt/chelidonine_msms1.txt,sirius_doc/manual/demo-data/txt/chelidonine_msms2.txt -z 354.134704589844 -o sirius_cli/src/test/temp_results/txt_temp_output formula -p orbitrap write-summaries --output sirius_cli/src/test/temp_results/txt_temp_summary
           ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe -o sirius_cli/src/test/temp_results/ms_temp_output -i sirius_doc/manual/demo-data/ms/Bicuculline.ms --ignore-formula formula -p orbitrap -c 5 fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/ms_temp_summary
 
-      - if: matrix.os == 'ubuntu-latest'
-        name: Sirius Ubuntu Run
-        run: |
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius login -u ${{ env.SIRIUS_USER }} -p  ${{ env.SIRIUS_PW }}
-          mkdir sirius_cli/src/test/temp_results
-          mkdir sirius_cli/src/test/temp_results/mgf_temp_output
-          mkdir sirius_cli/src/test/temp_results/mgf_temp_summary
-          mkdir sirius_cli/src/test/temp_results/ms_temp_output
-          mkdir sirius_cli/src/test/temp_results/ms_temp_summary
-          mkdir sirius_cli/src/test/temp_results/txt_temp_output
-          mkdir sirius_cli/src/test/temp_results/txt_temp_summary
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius --input sirius_doc/manual/demo-data/mgf/laudanosine.mgf --output sirius_cli/src/test/temp_results/mgf_temp_output formula -p orbitrap fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/mgf_temp_summary
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius -1 sirius_doc/manual/demo-data/txt/chelidonine_ms.txt -2 sirius_doc/manual/demo-data/txt/chelidonine_msms1.txt,sirius_doc/manual/demo-data/txt/chelidonine_msms2.txt -z 354.134704589844 -o sirius_cli/src/test/temp_results/txt_temp_output formula -p orbitrap write-summaries --output sirius_cli/src/test/temp_results/txt_temp_summary
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius -o sirius_cli/src/test/temp_results/ms_temp_output -i sirius_doc/manual/demo-data/ms/Bicuculline.ms --ignore-formula formula -p orbitrap -c 5 fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/ms_temp_summary
+      #- if: matrix.os == 'ubuntu-latest'
+      #  name: Sirius Ubuntu Run
+      #  run: |
+      #    ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius login -u ${{ env.SIRIUS_USER }} -p ${{ env.SIRIUS_PW }}
+      #    mkdir sirius_cli/src/test/temp_results
+      #    mkdir sirius_cli/src/test/temp_results/mgf_temp_output
+      #    mkdir sirius_cli/src/test/temp_results/mgf_temp_summary
+      #    mkdir sirius_cli/src/test/temp_results/ms_temp_output
+      #    mkdir sirius_cli/src/test/temp_results/ms_temp_summary
+      #    mkdir sirius_cli/src/test/temp_results/txt_temp_output
+      #    mkdir sirius_cli/src/test/temp_results/txt_temp_summary
+      #   ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius --input sirius_doc/manual/demo-data/mgf/laudanosine.mgf --output sirius_cli/src/test/temp_results/mgf_temp_output formula -p orbitrap fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/mgf_temp_summary
+      #   ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius -1 sirius_doc/manual/demo-data/txt/chelidonine_ms.txt -2 sirius_doc/manual/demo-data/txt/chelidonine_msms1.txt,sirius_doc/manual/demo-data/txt/chelidonine_msms2.txt -z 354.134704589844 -o sirius_cli/src/test/temp_results/txt_temp_output formula -p orbitrap write-summaries --output sirius_cli/src/test/temp_results/txt_temp_summary
+      #   ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius -o sirius_cli/src/test/temp_results/ms_temp_output -i sirius_doc/manual/demo-data/ms/Bicuculline.ms --ignore-formula formula -p orbitrap -c 5 fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/ms_temp_summary
 
-      - if: matrix.os == 'macos-latest'
-        name: Sirius MacOS Run
-        run: |
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius login -u ${{ env.SIRIUS_USER }} -p  ${{ env.SIRIUS_PW }}
-          mkdir sirius_cli/src/test/temp_results
-          mkdir sirius_cli/src/test/temp_results/mgf_temp_output
-          mkdir sirius_cli/src/test/temp_results/mgf_temp_summary
-          mkdir sirius_cli/src/test/temp_results/ms_temp_output
-          mkdir sirius_cli/src/test/temp_results/ms_temp_summary
-          mkdir sirius_cli/src/test/temp_results/txt_temp_output
-          mkdir sirius_cli/src/test/temp_results/txt_temp_summary
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius --input sirius_doc/manual/demo-data/mgf/laudanosine.mgf --output sirius_cli/src/test/temp_results/mgf_temp_output formula -p orbitrap fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/mgf_temp_summary
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius -1 sirius_doc/manual/demo-data/txt/chelidonine_ms.txt -2 sirius_doc/manual/demo-data/txt/chelidonine_msms1.txt,sirius_doc/manual/demo-data/txt/chelidonine_msms2.txt -z 354.134704589844 -o sirius_cli/src/test/temp_results/txt_temp_output formula -p orbitrap write-summaries --output sirius_cli/src/test/temp_results/txt_temp_summary
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius -o sirius_cli/src/test/temp_results/ms_temp_output -i sirius_doc/manual/demo-data/ms/Bicuculline.ms --ignore-formula formula -p orbitrap -c 5 fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/ms_temp_summary
+      #- if: matrix.os == 'macos-latest'
+      #  name: Sirius MacOS Run
+      #  run: |
+      #    ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius login -u ${{ env.SIRIUS_USER }} -p ${{ env.SIRIUS_PW }}
+      #    mkdir sirius_cli/src/test/temp_results
+      #    mkdir sirius_cli/src/test/temp_results/mgf_temp_output
+      #    mkdir sirius_cli/src/test/temp_results/mgf_temp_summary
+      #    mkdir sirius_cli/src/test/temp_results/ms_temp_output
+      #    mkdir sirius_cli/src/test/temp_results/ms_temp_summary
+      #    mkdir sirius_cli/src/test/temp_results/txt_temp_output
+      #    mkdir sirius_cli/src/test/temp_results/txt_temp_summary
+      #    ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius --input sirius_doc/manual/demo-data/mgf/laudanosine.mgf --output sirius_cli/src/test/temp_results/mgf_temp_output formula -p orbitrap fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/mgf_temp_summary
+      #    ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius -1 sirius_doc/manual/demo-data/txt/chelidonine_ms.txt -2 sirius_doc/manual/demo-data/txt/chelidonine_msms1.txt,sirius_doc/manual/demo-data/txt/chelidonine_msms2.txt -z 354.134704589844 -o sirius_cli/src/test/temp_results/txt_temp_output formula -p orbitrap write-summaries --output sirius_cli/src/test/temp_results/txt_temp_summary
+      #    ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius -o sirius_cli/src/test/temp_results/ms_temp_output -i sirius_doc/manual/demo-data/ms/Bicuculline.ms --ignore-formula formula -p orbitrap -c 5 fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/ms_temp_summary
 
       - name: Sirius MGF Test
         run: |
