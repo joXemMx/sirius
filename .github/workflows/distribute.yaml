@@ -108,7 +108,7 @@ jobs:
           mkdir sirius_cli/src/test/temp_results/ms_temp_summary
           mkdir sirius_cli/src/test/temp_results/txt_temp_output
           mkdir sirius_cli/src/test/temp_results/txt_temp_summary
-          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius --input sirius_doc/manual/demo-data/mgf/laudanosine.mgf --output sirius_cli/src/test/temp_results/mgf_temp_output formula -p orbitrap fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/mgf_temp_summary
+          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius --input sirius_doc/manual/demo-data/mgf/laudanosine.mgf --output sirius_cli/src/test/temp_results/mgf_temp_output formula -p orbitrap fingerprint structure compound-classes write-summaries --output sirius_cli/src/test/temp_results/mgf_temp_summary
 
       - name: Sirius MGF Test
         run: |
@@ -119,14 +119,16 @@ jobs:
           CANOPUS_NPC="${OUTPUT}canopus_npc/"
           FINGERPRINTS="${OUTPUT}fingerprints/"
           FINGER_ID="${OUTPUT}fingerprints/"
+          echo "${FINGER_ID}"
           DIRS=(${SUMMARY}, ${OUTPUT}, ${CANOPUS}, ${CANOPUS_NPC}, ${FINGERPRINTS}, ${FINGER_ID})
+          echo "${DIRS}"
           for DIR in "${DIRS[@]}"; do
             if [ -d "${DIR}" ]; then
               echo "Found result directory ${DIR}..."
               if [ "$(ls -A ${DIR})" ]; then
-                echo "$DIR has results."
+                echo "${DIR} has results."
               else
-                echo "Error: $DIR is Empty."
+                echo "Error: ${DIR} is Empty."
                 exit 1
               fi
             else
