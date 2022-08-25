@@ -80,31 +80,13 @@ jobs:
       - if: matrix.os == 'windows-latest'
         name: Sirius Windows Run
         run: |
-          sirius_dist\sirius_cli_single_os\build\distributions\sirius\sirius.exe login --user-env SIRIUS_USER --password-env SIRIUS_PW
-          mkdir sirius_cli\src\test\temp_results
-          mkdir sirius_cli\src\test\temp_results\mgf_temp_output
-          mkdir sirius_cli\src\test\temp_results\mgf_temp_summary
-          mkdir sirius_cli\src\test\temp_results\ms_temp_output
-          mkdir sirius_cli\src\test\temp_results\ms_temp_summary
-          mkdir sirius_cli\src\test\temp_results\txt_temp_output
-          mkdir sirius_cli\src\test\temp_results\txt_temp_summary
-          set PATH=%cd%
-          echo %PATH%
-          set MGF_DATA=%PATH%\sirius_doc\manual\demo-data\mgf\laudanosine.mgf
-          set MS_DATA=%PATH%\sirius_doc\manual\demo-data\ms\Bicuculline.ms
-          set TXT_DATA_1=%PATH%\sirius_doc\manual\demo-data\txt\chelidonine_ms.txt
-          set TXT_DATA_2=%PATH%\sirius_doc\manual\demo-data\txt\chelidonine_msms1.txt
-          set TXT_DATA_3=%PATH%\sirius_doc\manual\demo-data\txt\chelidonine_msms2.txt
-          set MGF_OUTPUT=%PATH%\sirius_cli\src\test\temp_results\mgf_temp_output
-          set MGF_SUMMARY=%PATH%\sirius_cli\src\test\temp_results\mgf_temp_summary
-          set MS_OUTPUT=%PATH%\sirius_cli\src\test\temp_results\ms_temp_output
-          set MS_SUMMARY=%PATH%\sirius_cli\src\test\temp_results\ms_temp_summary
-          set TXT_OUTPUT=%PATH%\sirius_cli\src\test\temp_results\txt_temp_output
-          set TXT_SUMMARY=%PATH%\sirius_cli\src\test\temp_results\txt_temp_summary
+          set TEMP_DIR=sirius_cli\src\test\temp_results
+          mkdir %TEMP_DIR% %TEMP_DIR%\mgf_temp_output %TEMP_DIR%\mgf_temp_summary %TEMP_DIR%\ms_temp_output %TEMP_DIR%\ms_temp_summary %TEMP_DIR%\txt_temp_output %TEMP_DIR%\txt_temp_summary
           cd sirius_dist\sirius_cli_single_os\build\distributions\sirius
-          sirius.exe --input %MGF_DATA% --output %MGF_OUTPUT% formula -p orbitrap fingerprint structure compound-classes write-summaries --output %MGF_SUMMARY%
-          sirius.exe -1 %TXT_DATA_1% -2 %TXT_DATA_2%,%TXT_DATA_3% -z 354.134704589844 -o %TXT_OUTPUT% formula -p orbitrap write-summaries --output %TXT_SUMMARY%
-          sirius.exe -o %MS_OUTPUT% -i %MS_DATA% --ignore-formula formula -p orbitrap -c 5 fingerprint structure compound-classes write-summaries --output %MS_SUMMARY%
+          sirius.exe login --user-env SIRIUS_USER --password-env SIRIUS_PW
+          sirius.exe --input %cd%\sirius_doc\manual\demo-data\mgf\laudanosine.mgf --output %cd%\sirius_cli\src\test\temp_results\mgf_temp_output formula -p orbitrap fingerprint structure compound-classes write-summaries --output %cd%\sirius_cli\src\test\temp_results\mgf_temp_summary
+          sirius.exe -1 %cd%\sirius_doc\manual\demo-data\txt\chelidonine_ms.txt -2 %cd%\sirius_doc\manual\demo-data\txt\chelidonine_msms1.txt,%cd%\sirius_doc\manual\demo-data\txt\chelidonine_msms2.txt -z 354.134704589844 -o %cd%\sirius_cli\src\test\temp_results\txt_temp_output formula -p orbitrap write-summaries --output %cd%\sirius_cli\src\test\temp_results\txt_temp_summary
+          sirius.exe -o %cd%\sirius_cli\src\test\temp_results\ms_temp_output -i %cd%\sirius_doc\manual\demo-data\ms\Bicuculline.ms --ignore-formula formula -p orbitrap -c 5 fingerprint structure compound-classes write-summaries --output %cd%\sirius_cli\src\test\temp_results\ms_temp_summary
         shell: cmd
 
       #- if: matrix.os == 'ubuntu-latest'
