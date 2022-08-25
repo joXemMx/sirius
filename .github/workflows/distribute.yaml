@@ -110,8 +110,7 @@ jobs:
           mkdir sirius_cli/src/test/temp_results/txt_temp_summary
           ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius --help          ls sirius_cli/src/test
 
-      - if: matrix.os == 'windows-latest'
-        name: Sirius Test
+      - name: Sirius Test
         run: |
           DIR="sirius_cli/src/test/temp_results"
           if [ -d "$DIR" ]; then
@@ -121,18 +120,6 @@ jobs:
               exit 1
           fi
         shell: bash
-
-      - if: matrix.os != 'windows-latest'
-        name: Sirius Test
-        run: |
-          DIR="sirius_cli/src/test/temp_results"
-          if [ -d "$DIR" ]; then
-            echo "Found result directory ${DIR}..."
-          else
-            echo "Error: result directory ${DIR} not found. Can not continue."
-              exit 1
-          fi
-
 
 #jobs:
 #  distCLI:
