@@ -144,7 +144,7 @@ jobs:
           CANOPUS="${OUTPUT}canopus/"
           CANOPUS_NPC="${OUTPUT}canopus_npc/"
           FINGERPRINTS="${OUTPUT}fingerprints/"
-          FINGER_ID="${OUTPUT}fingerprints/"
+          FINGER_ID="${OUTPUT}fingerid/"
           DIRS=(${SUMMARY} ${OUTPUT} ${CANOPUS} ${CANOPUS_NPC} ${FINGERPRINTS} ${FINGER_ID})
           for DIR in "${DIRS[@]}" ; do
             if [ -d "${DIR}" ]; then
@@ -170,7 +170,7 @@ jobs:
           CANOPUS="${OUTPUT}canopus/"
           CANOPUS_NPC="${OUTPUT}canopus_npc/"
           FINGERPRINTS="${OUTPUT}fingerprints/"
-          FINGER_ID="${OUTPUT}fingerprints/"
+          FINGER_ID="${OUTPUT}fingerid/"
           echo "${FINGER_ID}"
           DIRS=(${SUMMARY} ${OUTPUT} ${CANOPUS} ${CANOPUS_NPC} ${FINGERPRINTS} ${FINGER_ID})
           echo "${DIRS}"
