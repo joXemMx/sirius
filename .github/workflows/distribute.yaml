@@ -80,9 +80,9 @@ jobs:
       - if: matrix.os == 'windows-latest'
         name: Sirius Windows Run
         run: |
-          TEMP_DIR="sirius_cli/src/test/temp_results"
+          TEMP_DIR="$(cd "$(dirname "sirius_cli/src/test/temp_results")"; pwd -P)/$(basename "sirius_cli/src/test/temp_results")"
           mkdir "${TEMP_DIR}" "${TEMP_DIR}/mgf_temp_output" "${TEMP_DIR}/mgf_temp_summary" "${TEMP_DIR}/ms_temp_output" "${TEMP_DIR}/ms_temp_summary" "${TEMP_DIR}/txt_temp_output" "${TEMP_DIR}/txt_temp_summary"
-          DEMO_DIR="sirius_doc/manual/demo-data"
+          DEMO_DIR="$(cd "$(dirname "sirius_doc/manual/demo-data")"; pwd -P)/$(basename "sirius_doc/manual/demo-data")"
           MGF_DATA="${DEMO_DIR}/mgf/laudanosine.mgf"
           MS_DATA="${DEMO_DIR}/ms/Bicuculline.ms"
           TXT_DATA_1="${DEMO_DIR}/txt/chelidonine_ms.txt"
@@ -102,7 +102,6 @@ jobs:
       - if: matrix.os == 'ubuntu-latest'
         name: Sirius Ubuntu Run
         run: |
-          echo "$(cd "$(dirname "sirius_cli/src/test/temp_results")"; pwd -P)/$(basename "sirius_cli/src/test/temp_results")"
           TEMP_DIR="sirius_cli/src/test/temp_results"
           mkdir "${TEMP_DIR}" "${TEMP_DIR}/mgf_temp_output" "${TEMP_DIR}/mgf_temp_summary" "${TEMP_DIR}/ms_temp_output" "${TEMP_DIR}/ms_temp_summary" "${TEMP_DIR}/txt_temp_output" "${TEMP_DIR}/txt_temp_summary"
           DEMO_DIR="sirius_doc/manual/demo-data"
