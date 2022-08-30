@@ -122,7 +122,15 @@ public class ComputeContext {
             if (cancelIfRunning)
                 j.cancel();
             if (awaitDeletion) {
-                j.getResult();
+                j.getResult(); //use state-lock to ensure that state is update when deleting cancelled job.
+//                j.withStateLockDo(() ->  BackgroundRuns.removeRun(j.getRunId()));
+//                j.setState(cancelIfRunning ? JJob.JobState.CANCELED : JJob.JobState.DONE);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    //ignore
+                }
+                BackgroundRuns.removeRun(j.getRunId());
             } else {
                 j.addPropertyChangeListener(JobStateEvent.JOB_STATE_EVENT, evt -> {
                     if (evt instanceof JobStateEvent) {
@@ -131,6 +139,9 @@ public class ComputeContext {
                             BackgroundRuns.removeRun(jj.getRunId());
                     }
                 });
+                //may already have been finished during listener registration
+                if (j.isFinished())
+                    BackgroundRuns.removeRun(j.getRunId());
             }
         }
         return extractJobId(j, progress, command, effectedCompounds);
