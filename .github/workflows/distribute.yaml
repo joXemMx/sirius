@@ -88,6 +88,7 @@ jobs:
             cygwin*)  echo "ALSO WINDOWS" ;;
             *)        echo "unknown: $OSTYPE" ;;
           esac
+        shell: bash
 
 #      - if: matrix.os == 'windows-latest'
 #        name: Sirius Windows Run
