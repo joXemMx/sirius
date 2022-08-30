@@ -77,16 +77,40 @@ jobs:
           build-root-directory: sirius_dist/sirius_cli_single_os
           arguments: distImage
 
-      - name: Test switch case
+      - name: Sirius Run (all OS)
         run: |
+          TEMP_DIR="$(cd "$(dirname "sirius_cli/src/test/temp_results")"; pwd -P)/$(basename "sirius_cli/src/test/temp_results")"
+          mkdir "${TEMP_DIR}" "${TEMP_DIR}/mgf_temp_output" "${TEMP_DIR}/mgf_temp_summary" "${TEMP_DIR}/ms_temp_output" "${TEMP_DIR}/ms_temp_summary" "${TEMP_DIR}/txt_temp_output" "${TEMP_DIR}/txt_temp_summary"
+          DEMO_DIR="$(cd "$(dirname "sirius_doc/manual/demo-data")"; pwd -P)/$(basename "sirius_doc/manual/demo-data")"
+          MGF_DATA="${DEMO_DIR}/mgf/laudanosine.mgf"
+          MS_DATA="${DEMO_DIR}/ms/Bicuculline.ms"
+          TXT_DATA_1="${DEMO_DIR}/txt/chelidonine_ms.txt"
+          TXT_DATA_2="${DEMO_DIR}/txt/chelidonine_msms1.txt,${DEMO_DIR}/txt/chelidonine_msms2.txt"
+          MGF_OUTPUT="${TEMP_DIR}/mgf_temp_output"
+          MGF_SUMMARY="${TEMP_DIR}/mgf_temp_summary"
+          MS_OUTPUT="${TEMP_DIR}/ms_temp_output"
+          MS_SUMMARY="${TEMP_DIR}/ms_temp_summary"
+          TXT_OUTPUT="${TEMP_DIR}/txt_temp_output"
+          TXT_SUMMARY="${TEMP_DIR}/txt_temp_summary"
           case "$OSTYPE" in
-            solaris*) echo "SOLARIS" ;;
-            darwin*)  echo "OSX" ;;
-            linux*)   echo "LINUX" ;;
-            bsd*)     echo "BSD" ;;
-            msys*)    echo "WINDOWS" ;;
-            cygwin*)  echo "ALSO WINDOWS" ;;
-            *)        echo "unknown: $OSTYPE" ;;
+            darwin*)             
+              ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius login --user-env SIRIUS_USER --password-env SIRIUS_PW
+              ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius --input ${MGF_DATA} --output ${MGF_OUTPUT} formula -p orbitrap fingerprint structure compound-classes write-summaries --output ${MGF_SUMMARY}
+              ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius -1 ${TXT_DATA_1} -2 ${TXT_DATA_2} -z 354.134704589844 -o ${TXT_OUTPUT} formula -p orbitrap write-summaries --output ${TXT_SUMMARY}
+              ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius -o ${MS_OUTPUT} -i ${MS_DATA} --ignore-formula formula -p orbitrap -c 5 fingerprint structure compound-classes write-summaries --output ${MS_SUMMARY}
+            ;;
+            linux*)             
+              ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius login --user-env SIRIUS_USER --password-env SIRIUS_PW
+              ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius --input ${MGF_DATA} --output ${MGF_OUTPUT} formula -p orbitrap fingerprint structure compound-classes write-summaries --output ${MGF_SUMMARY}
+              ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius -1 ${TXT_DATA_1} -2 ${TXT_DATA_2} -z 354.134704589844 -o ${TXT_OUTPUT} formula -p orbitrap write-summaries --output ${TXT_SUMMARY}
+              ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/bin/sirius -o ${MS_OUTPUT} -i ${MS_DATA} --ignore-formula formula -p orbitrap -c 5 fingerprint structure compound-classes write-summaries --output ${MS_SUMMARY}
+            ;;
+            msys*)             
+              ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe login --user-env SIRIUS_USER --password-env SIRIUS_PW
+              ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe --input ${MGF_DATA} --output ${MGF_OUTPUT} formula -p orbitrap fingerprint structure compound-classes write-summaries --output ${MGF_SUMMARY}
+              ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe -1 ${TXT_DATA_1} -2 ${TXT_DATA_2} -z 354.134704589844 -o ${TXT_OUTPUT} formula -p orbitrap write-summaries --output ${TXT_SUMMARY}
+              ./sirius_dist/sirius_cli_single_os/build/distributions/sirius/sirius.exe -o ${MS_OUTPUT} -i ${MS_DATA} --ignore-formula formula -p orbitrap -c 5 fingerprint structure compound-classes write-summaries --output ${MS_SUMMARY}
+            ;;
           esac
         shell: bash
 
@@ -142,82 +166,82 @@ jobs:
 #          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius -1 ${TXT_DATA_1} -2 ${TXT_DATA_2} -z 354.134704589844 -o ${TXT_OUTPUT} formula -p orbitrap write-summaries --output ${TXT_SUMMARY}
 #          ./sirius_dist/sirius_cli_single_os/build/distributions/sirius.app/Contents/MacOS/sirius -o ${MS_OUTPUT} -i ${MS_DATA} --ignore-formula formula -p orbitrap -c 5 fingerprint structure compound-classes write-summaries --output ${MS_SUMMARY}
 #        shell: bash
-#
-#      - name: Sirius MGF Test
-#        run: |
-#          RESULTS="sirius_cli/src/test/temp_results/"
-#          OUTPUT="${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/"
-#          SUMMARY="${RESULTS}mgf_temp_summary/1_laudanosine_FEATURE_1/"
-#          CANOPUS="${OUTPUT}canopus/"
-#          CANOPUS_NPC="${OUTPUT}canopus_npc/"
-#          FINGERPRINTS="${OUTPUT}fingerprints/"
-#          FINGER_ID="${OUTPUT}fingerid/"
-#          DIRS=(${SUMMARY} ${OUTPUT} ${CANOPUS} ${CANOPUS_NPC} ${FINGERPRINTS} ${FINGER_ID})
-#          for DIR in "${DIRS[@]}" ; do
-#            if [ -d "${DIR}" ]; then
-#              echo "Found result directory ${DIR}..."
-#              if [ "$(ls -A ${DIR})" ]; then
-#                echo "${DIR} is not empty."
-#              else
-#                echo "Error: ${DIR} is empty."
-#                exit 1
-#              fi
-#            else
-#              echo "Error: result directory ${DIR} not found."
-#              exit 1
-#            fi
-#          done
-#        shell: bash
-#
-#      - name: Sirius MS Test
-#        run: |
-#          RESULTS="sirius_cli/src/test/temp_results/"
-#          OUTPUT="${RESULTS}ms_temp_output/1_Bicuculline_Bicuculline/"
-#          SUMMARY="${RESULTS}ms_temp_summary/1_Bicuculline_Bicuculline/"
-#          CANOPUS="${OUTPUT}canopus/"
-#          CANOPUS_NPC="${OUTPUT}canopus_npc/"
-#          FINGERPRINTS="${OUTPUT}fingerprints/"
-#          FINGER_ID="${OUTPUT}fingerid/"
-#          echo "${FINGER_ID}"
-#          DIRS=(${SUMMARY} ${OUTPUT} ${CANOPUS} ${CANOPUS_NPC} ${FINGERPRINTS} ${FINGER_ID})
-#          echo "${DIRS}"
-#          for DIR in "${DIRS[@]}" ; do
-#            if [ -d "${DIR}" ]; then
-#              echo "Found result directory ${DIR}..."
-#              if [ "$(ls -A ${DIR})" ]; then
-#                echo "${DIR} is not empty."
-#              else
-#                echo "Error: ${DIR} is empty."
-#                exit 1
-#              fi
-#            else
-#              echo "Error: result directory ${DIR} not found."
-#              exit 1
-#            fi
-#          done
-#        shell: bash
-#
-#      - name: Sirius TXT Test
-#        run: |
-#          RESULTS="sirius_cli/src/test/temp_results/"
-#          SUMMARY="${RESULTS}txt_temp_summary/1_unknown_/"
-#          if [ -d "${SUMMARY}" ]; then
-#            echo "Found result directory ${SUMMARY}..."
-#            if [ "$(ls -A ${SUMMARY})" ]; then
-#              echo "${SUMMARY} is not empty."
-#            else
-#              echo "Error: ${SUMMARY} is empty."
-#              exit 1
-#            fi
-#          else
-#            echo "Error: result directory ${SUMMARY} not found."
-#            exit 1
-#          fi
-#        shell: bash
-#
-#      - name: Sirius Run Cleanup
-#        run: |
-#          rm -r sirius_cli/src/test/temp_results
+
+      - name: Sirius MGF Test
+        run: |
+          RESULTS="sirius_cli/src/test/temp_results/"
+          OUTPUT="${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/"
+          SUMMARY="${RESULTS}mgf_temp_summary/1_laudanosine_FEATURE_1/"
+          CANOPUS="${OUTPUT}canopus/"
+          CANOPUS_NPC="${OUTPUT}canopus_npc/"
+          FINGERPRINTS="${OUTPUT}fingerprints/"
+          FINGER_ID="${OUTPUT}fingerid/"
+          DIRS=(${SUMMARY} ${OUTPUT} ${CANOPUS} ${CANOPUS_NPC} ${FINGERPRINTS} ${FINGER_ID})
+          for DIR in "${DIRS[@]}" ; do
+            if [ -d "${DIR}" ]; then
+              echo "Found result directory ${DIR}..."
+              if [ "$(ls -A ${DIR})" ]; then
+                echo "${DIR} is not empty."
+              else
+                echo "Error: ${DIR} is empty."
+                exit 1
+              fi
+            else
+              echo "Error: result directory ${DIR} not found."
+              exit 1
+            fi
+          done
+        shell: bash
+
+      - name: Sirius MS Test
+        run: |
+          RESULTS="sirius_cli/src/test/temp_results/"
+          OUTPUT="${RESULTS}ms_temp_output/1_Bicuculline_Bicuculline/"
+          SUMMARY="${RESULTS}ms_temp_summary/1_Bicuculline_Bicuculline/"
+          CANOPUS="${OUTPUT}canopus/"
+          CANOPUS_NPC="${OUTPUT}canopus_npc/"
+          FINGERPRINTS="${OUTPUT}fingerprints/"
+          FINGER_ID="${OUTPUT}fingerid/"
+          echo "${FINGER_ID}"
+          DIRS=(${SUMMARY} ${OUTPUT} ${CANOPUS} ${CANOPUS_NPC} ${FINGERPRINTS} ${FINGER_ID})
+          echo "${DIRS}"
+          for DIR in "${DIRS[@]}" ; do
+            if [ -d "${DIR}" ]; then
+              echo "Found result directory ${DIR}..."
+              if [ "$(ls -A ${DIR})" ]; then
+                echo "${DIR} is not empty."
+              else
+                echo "Error: ${DIR} is empty."
+                exit 1
+              fi
+            else
+              echo "Error: result directory ${DIR} not found."
+              exit 1
+            fi
+          done
+        shell: bash
+
+      - name: Sirius TXT Test
+        run: |
+          RESULTS="sirius_cli/src/test/temp_results/"
+          SUMMARY="${RESULTS}txt_temp_summary/1_unknown_/"
+          if [ -d "${SUMMARY}" ]; then
+            echo "Found result directory ${SUMMARY}..."
+            if [ "$(ls -A ${SUMMARY})" ]; then
+              echo "${SUMMARY} is not empty."
+            else
+              echo "Error: ${SUMMARY} is empty."
+              exit 1
+            fi
+          else
+            echo "Error: result directory ${SUMMARY} not found."
+            exit 1
+          fi
+        shell: bash
+
+      - name: Sirius Run Cleanup
+        run: |
+          rm -r sirius_cli/src/test/temp_results
 
 #      - name: Upload multiOS Source
 #        uses: actions/upload-artifact@v2
