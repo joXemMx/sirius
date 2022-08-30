@@ -199,7 +199,6 @@ jobs:
             ~/.m2/repository/de/unijena/bioinf/ms/sirius/${{ steps.sirius_version.outputs.value }}/*.sha256
 
 
-
   distService:
     strategy:
       matrix:
@@ -380,7 +379,6 @@ jobs:
             ~/.m2/repository/de/unijena/bioinf/ms/sirius/${{ steps.sirius_version.outputs.value }}/*.pkg
             ~/.m2/repository/de/unijena/bioinf/ms/sirius/${{ steps.sirius_version.outputs.value }}/*.deb
             ~/.m2/repository/de/unijena/bioinf/ms/sirius/${{ steps.sirius_version.outputs.value }}/*.sha256
-
 
 
   distGUI:
@@ -565,7 +563,6 @@ jobs:
             ~/.m2/repository/de/unijena/bioinf/ms/sirius/${{ steps.sirius_version.outputs.value }}/*.sha256
 
 
-
   distMulti:
     needs: distCLI
     runs-on: ubuntu-latest
@@ -621,7 +618,6 @@ jobs:
             sirius-${{ steps.sirius_version.outputs.value }}-Linux-x86-64-headless-img
             sirius-${{ steps.sirius_version.outputs.value }}-Windows-x86-64-headless-img
             sirius-${{ steps.sirius_version.outputs.value }}-macOS-x86-64-headless-img
-
 
 
 #  release:
