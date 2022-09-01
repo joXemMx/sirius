@@ -30,6 +30,7 @@ jobs:
 
       - name: Change a file
         run: |
+          cd .github/
           echo "h"  >> trashfile.txt
           cat trashfile.txt
         shell: bash
@@ -77,7 +78,7 @@ jobs:
             *) echo "Error: Could not find OS."; exit 1 ;;
           esac
           ${SIRIUS} login --user-env SIRIUS_USER --password-env SIRIUS_PW
-          ${SIRIUS} --input ${MGF_DATA} --output ${MGF_OUTPUT} formula -p orbitrap fingerprint structure compound-classes write-summaries --output ${MGF_SUMMARY}
+          timeout 5m ${SIRIUS} --input ${MGF_DATA} --output ${MGF_OUTPUT} formula -p orbitrap fingerprint structure compound-classes write-summaries --output ${MGF_SUMMARY}
         shell: bash
 
       - name: Sirius MGF Test
