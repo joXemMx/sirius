@@ -72,7 +72,7 @@ jobs:
             *) echo "Error: Could not find OS."; exit 1 ;;
           esac
           ${SIRIUS} login --user-env SIRIUS_USER --password-env SIRIUS_PW
-          timeout 1m ${SIRIUS} --input ${MGF_DATA} --output ${MGF_OUTPUT} formula -p orbitrap fingerprint structure compound-classes write-summaries --output ${MGF_SUMMARY}
+          timeout 30m ${SIRIUS} --input ${MGF_DATA} --output ${MGF_OUTPUT} formula -p orbitrap fingerprint structure compound-classes write-summaries --output ${MGF_SUMMARY}
         shell: bash
 
       - name: Sirius MGF Test
@@ -125,7 +125,7 @@ jobs:
           # comma-separated string, send email to
           to: jonas.em@t-online.de
           # from email name
-          from: Jonas
+          from: Jonas Emmert
 
       - name: Sirius Run Cleanup
         if: always()
