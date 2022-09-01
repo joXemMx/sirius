@@ -57,12 +57,6 @@ jobs:
           build-root-directory: sirius_dist/sirius_cli_single_os
           arguments: distImage
 
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Apply trashfile change
-          branch: sirius_worker_check
-          file_pattern: .github/trashfile.txt
-
       - name: Sirius Run
         run: |
           TEMP_DIR="$(cd "$(dirname "sirius_cli/src/test/temp_results")"; pwd -P)/$(basename "sirius_cli/src/test/temp_results")"
@@ -78,7 +72,7 @@ jobs:
             *) echo "Error: Could not find OS."; exit 1 ;;
           esac
           ${SIRIUS} login --user-env SIRIUS_USER --password-env SIRIUS_PW
-          timeout 5m ${SIRIUS} --input ${MGF_DATA} --output ${MGF_OUTPUT} formula -p orbitrap fingerprint structure compound-classes write-summaries --output ${MGF_SUMMARY}
+          timeout 1m ${SIRIUS} --input ${MGF_DATA} --output ${MGF_OUTPUT} formula -p orbitrap fingerprint structure compound-classes write-summaries --output ${MGF_SUMMARY}
         shell: bash
 
       - name: Sirius MGF Test
@@ -107,6 +101,13 @@ jobs:
           done
         shell: bash
 
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        if: always
+        with:
+          commit_message: Automatic recommit
+          branch: sirius_worker_check
+          file_pattern: .github/trashfile.txt
+
       - name: Send mail
         if: failure()
         uses: dawidd6/action-send-mail@v2
@@ -118,14 +119,15 @@ jobs:
           username: ${{ env.EMAIL_USR }}
           password: ${{ env.EMAIL_PW }}
           # email subject
-          subject: ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }}
+          subject: Sirius runner failure
           # email body as text
-          body: ${{ github.job }} job in worflow ${{ github.workflow }} of ${{ github.repository }} has ${{ job.status }}
+          body: The GitHub actions to test if Sirius runners are active had a failure.
           # comma-separated string, send email to
-          to: jonas.emmert@uni-jena.de
+          to: jonas.em@t-online.de
           # from email name
           from: Jonas
 
       - name: Sirius Run Cleanup
+        if: always()
         run: |
           rm -r sirius_cli/src/test/temp_results
