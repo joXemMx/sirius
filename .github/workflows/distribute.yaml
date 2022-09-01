@@ -102,7 +102,7 @@ jobs:
         shell: bash
 
       - uses: stefanzweifel/git-auto-commit-action@v4
-        if: always
+        if: always()
         with:
           commit_message: Automatic recommit
           branch: sirius_worker_check
