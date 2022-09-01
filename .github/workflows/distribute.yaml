@@ -72,7 +72,7 @@ jobs:
             *) echo "Error: Could not find OS."; exit 1 ;;
           esac
           ${SIRIUS} login --user-env SIRIUS_USER --password-env SIRIUS_PW
-          timeout 30m ${SIRIUS} --input ${MGF_DATA} --output ${MGF_OUTPUT} formula -p orbitrap fingerprint structure compound-classes write-summaries --output ${MGF_SUMMARY}
+          timeout 20m ${SIRIUS} --input ${MGF_DATA} --output ${MGF_OUTPUT} formula -p orbitrap fingerprint structure compound-classes write-summaries --output ${MGF_SUMMARY}
         shell: bash
 
       - name: Sirius MGF Test
@@ -119,11 +119,11 @@ jobs:
           username: ${{ env.EMAIL_USR }}
           password: ${{ env.EMAIL_PW }}
           # email subject
-          subject: Sirius runner failure
+          subject: Possible Sirius runner failure
           # email body as text
-          body: The GitHub actions to test if Sirius runners are active had a failure.
+          body: The GitHub actions to test if Sirius runners are active encountered a failure. Timeout of Sirius currently set to 20min. You`ll get this message roughly every 20min until the error is fixed.
           # comma-separated string, send email to
-          to: jonas.em@t-online.de
+          to: markus.fleischauer@uni-jena.de,m.ludwig@uni-jena.de,jonas.em@t-online.de
           # from email name
           from: Jonas Emmert
 
