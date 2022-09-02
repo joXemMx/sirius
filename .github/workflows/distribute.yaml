@@ -75,32 +75,6 @@ jobs:
           timeout 20m ${SIRIUS} --input ${MGF_DATA} --output ${MGF_OUTPUT} formula -p orbitrap fingerprint structure compound-classes write-summaries --output ${MGF_SUMMARY}
         shell: bash
 
-      - name: Sirius MGF Test
-        run: |
-          RESULTS="sirius_cli/src/test/temp_results/"
-          OUTPUT="${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/"
-          SUMMARY="${RESULTS}mgf_temp_summary/1_laudanosine_FEATURE_1/"
-          CANOPUS="${OUTPUT}canopus/"
-          CANOPUS_NPC="${OUTPUT}canopus_npc/"
-          FINGERPRINTS="${OUTPUT}fingerprints/"
-          FINGER_ID="${OUTPUT}fingerid/"
-          DIRS=(${SUMMARY} ${OUTPUT} ${CANOPUS} ${CANOPUS_NPC} ${FINGERPRINTS} ${FINGER_ID})
-          for DIR in "${DIRS[@]}" ; do
-            if [ -d "${DIR}" ]; then
-              echo "Found result directory ${DIR}..."
-              if [ "$(ls -A ${DIR})" ]; then
-                echo "${DIR} is not empty."
-              else
-                echo "Error: ${DIR} is empty."
-                exit 1
-              fi
-            else
-              echo "Error: result directory ${DIR} not found."
-              exit 1
-            fi
-          done
-        shell: bash
-
       - name: Sleeper
         run: |
           sleep 7m
