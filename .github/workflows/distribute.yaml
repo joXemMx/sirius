@@ -101,6 +101,11 @@ jobs:
           done
         shell: bash
 
+      - name: Sleeper
+        run: |
+          sleep 7m
+        shell: bash
+
       - uses: stefanzweifel/git-auto-commit-action@v4
         if: always()
         with:
