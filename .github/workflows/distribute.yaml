@@ -102,7 +102,7 @@ jobs:
           # email body as text
           body: The GitHub actions to test if Sirius runners are active encountered a failure. Timeout of Sirius currently set to 20min. You`ll get this message roughly every 20min until the error is fixed.
           # comma-separated string, send email to
-          to: markus.fleischauer@uni-jena.de,m.ludwig@uni-jena.de,jonas.em@t-online.de
+          to: markus.fleischauer@uni-jena.de,m.ludwig@uni-jena.de,hoffmann.m@uni-jena.de,jonas.em@t-online.de
           # from email name
           from: Jonas Emmert
 
