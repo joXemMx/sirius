@@ -80,13 +80,6 @@ jobs:
           sleep 7m
         shell: bash
 
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        if: always()
-        with:
-          commit_message: Automatic recommit
-          branch: sirius_worker_check
-          file_pattern: .github/trashfile.txt
-
       - name: Send mail
         if: failure()
         uses: dawidd6/action-send-mail@v2
@@ -105,6 +98,13 @@ jobs:
           to: markus.fleischauer@uni-jena.de,m.ludwig@uni-jena.de,hoffmann.m@uni-jena.de,jonas.em@t-online.de
           # from email name
           from: Jonas Emmert
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        if: always()
+        with:
+          commit_message: Automatic recommit
+          branch: sirius_worker_check
+          file_pattern: .github/trashfile.txt
 
       - name: Sirius Run Cleanup
         if: always()
