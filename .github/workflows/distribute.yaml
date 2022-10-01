@@ -77,7 +77,7 @@ jobs:
 
       - name: Sleeper
         run: |
-          sleep 7m
+          sleep 18m
         shell: bash
 
       - name: Send mail
