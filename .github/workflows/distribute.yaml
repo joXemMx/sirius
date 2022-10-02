@@ -128,6 +128,8 @@ jobs:
               exit 1
             fi
           done
+          ls "${RESULTS}mgf_temp_output/"
+          ls "${RESULTS}mgf_temp_summary/"
         shell: bash
 
       - name: Sirius MS Test
