@@ -130,6 +130,9 @@ jobs:
           done
           ls "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/fingerprints"
           file "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/fingerprints"
+          file "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/fingerid"
+          file "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/canopus"
+          file "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/canopus_npc"
           gzip -t "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/fingerprints"
         shell: bash
 
