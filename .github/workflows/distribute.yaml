@@ -189,7 +189,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Sirius_output_mgf_cli_ubuntu
-          path: sirius_cli/src/test/temp_results/mgf_temp_output/1_laudanosine_FEATURE_1
+          path: sirius_cli/src/test/temp_results/
 
 #      - if: matrix.os == 'ubuntu-latest'
 #        name: Archive Sirius
