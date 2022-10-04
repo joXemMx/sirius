@@ -138,6 +138,12 @@ jobs:
           ls "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/canopus_npc"
         shell: bash
 
+      - name: Archive Sirius results
+        uses: actions/upload-artifact@v3
+        with:
+          name: Sirius_output_mgf_cli
+          path: sirius_cli/src/test/temp_results/mgf_temp_output/1_laudanosine_FEATURE_1
+
       - name: Sirius MS Test
         run: |
           RESULTS="sirius_cli/src/test/temp_results/"
