@@ -192,12 +192,12 @@ jobs:
           name: Sirius_output_mgf_cli_ubuntu
           path: sirius_cli/src/test/temp_results/
 
-#      - if: matrix.os == 'ubuntu-latest'
-#        name: Archive Sirius
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: Sirius_cli_ubuntu
-#          path: sirius_dist/sirius_cli_single_os/build/distributions
+      - if: matrix.os == 'windows-latest'
+        name: Archive Sirius
+        uses: actions/upload-artifact@v3
+        with:
+          name: Sirius_cli_ubuntu
+          path: sirius_dist/sirius_cli_single_os/build/distributions/
 
       - name: Sirius Run Cleanup
         run: |
