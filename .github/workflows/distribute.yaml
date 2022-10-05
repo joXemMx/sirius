@@ -75,7 +75,8 @@ jobs:
         with:
           gradle-version: 6.9
           build-root-directory: sirius_dist/sirius_cli_single_os
-          arguments: --refresh-dependencies --no-build-cache clean publishSiriusPublicationToMavenLocal -P "de.unijena.bioinf.build.MACOS_APP_IDENTITY_ID=${{ secrets.MACOS_APP_IDENTITY_ID }}" -P "de.unijena.bioinf.build.MACOS_IDENTITY_ID=${{ secrets.MACOS_IDENTITY_ID }}" -P "de.unijena.bioinf.build.MACOS_APPLE_ID=${{ secrets.MACOS_APPLE_ID }}" -P "de.unijena.bioinf.build.MACOS_APPLE_ID_PW=${{ secrets.MACOS_APPLE_ID_PW }}" -P "de.unijena.bioinf.build.WIN_INSTALLER_CERTIFICATE_FILE=${{ steps.generic_codesign_cert.outputs.filePath }}"  -P "de.unijena.bioinf.build.WIN_INSTALLER_CERTIFICATE_PW=${{ secrets.GENERIC_INSTALLER_CERTIFICATE_PW }}" -P "de.unijena.bioinf.build.WIN_INSTALLER_CERTIFICATE_TIMESTAMP_URL=${{ secrets.GENERIC_INSTALLER_CERTIFICATE_TIMESTAMP_URL }}"
+          arguments: --refresh-dependencies --no-build-cache distImage
+          #arguments: --refresh-dependencies --no-build-cache clean publishSiriusPublicationToMavenLocal -P "de.unijena.bioinf.build.MACOS_APP_IDENTITY_ID=${{ secrets.MACOS_APP_IDENTITY_ID }}" -P "de.unijena.bioinf.build.MACOS_IDENTITY_ID=${{ secrets.MACOS_IDENTITY_ID }}" -P "de.unijena.bioinf.build.MACOS_APPLE_ID=${{ secrets.MACOS_APPLE_ID }}" -P "de.unijena.bioinf.build.MACOS_APPLE_ID_PW=${{ secrets.MACOS_APPLE_ID_PW }}" -P "de.unijena.bioinf.build.WIN_INSTALLER_CERTIFICATE_FILE=${{ steps.generic_codesign_cert.outputs.filePath }}"  -P "de.unijena.bioinf.build.WIN_INSTALLER_CERTIFICATE_PW=${{ secrets.GENERIC_INSTALLER_CERTIFICATE_PW }}" -P "de.unijena.bioinf.build.WIN_INSTALLER_CERTIFICATE_TIMESTAMP_URL=${{ secrets.GENERIC_INSTALLER_CERTIFICATE_TIMESTAMP_URL }}"
 
       - name: Sirius Run
         run: |
@@ -128,14 +129,14 @@ jobs:
               exit 1
             fi
           done
-#          file "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/fingerprints"
-#          ls "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/fingerprints"
-#          file "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/fingerid"
-#          ls "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/fingerid"
-#          file "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/canopus"
-#          ls "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/canopus"
-#          file "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/canopus_npc"
-#          ls "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/canopus_npc"
+          file "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/fingerprints"
+          ls "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/fingerprints"
+          file "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/fingerid"
+          ls "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/fingerid"
+          file "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/canopus"
+          ls "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/canopus"
+          file "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/canopus_npc"
+          ls "${RESULTS}mgf_temp_output/1_laudanosine_FEATURE_1/canopus_npc"
         shell: bash
 
       - name: Sirius MS Test
@@ -202,23 +203,23 @@ jobs:
         run: |
           rm -r sirius_cli/src/test/temp_results
 
-      - name: Upload multiOS Source
-        uses: actions/upload-artifact@v2
-        with:
-          name: "sirius-${{ steps.sirius_version.outputs.value }}-${{ runner.os }}-x86-64-headless-img"
-          path: sirius_dist/sirius_cli_single_os/build/distributions/${{ runner.os == 'macOS' && 'sirius.app' || 'sirius' }}/
-
-      - name: Upload Distributions
-        uses: actions/upload-artifact@v2
-        with:
-          retention-days: 1
-          name: "sirius-${{ steps.sirius_version.outputs.value }}-${{ runner.os }}-x86-64-headless"
-          path: |
-            ~/.m2/repository/de/unijena/bioinf/ms/sirius/${{ steps.sirius_version.outputs.value }}/*.zip
-            ~/.m2/repository/de/unijena/bioinf/ms/sirius/${{ steps.sirius_version.outputs.value }}/*.msi
-            ~/.m2/repository/de/unijena/bioinf/ms/sirius/${{ steps.sirius_version.outputs.value }}/*.pkg
-            ~/.m2/repository/de/unijena/bioinf/ms/sirius/${{ steps.sirius_version.outputs.value }}/*.deb
-            ~/.m2/repository/de/unijena/bioinf/ms/sirius/${{ steps.sirius_version.outputs.value }}/*.sha256
+#      - name: Upload multiOS Source
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: "sirius-${{ steps.sirius_version.outputs.value }}-${{ runner.os }}-x86-64-headless-img"
+#          path: sirius_dist/sirius_cli_single_os/build/distributions/${{ runner.os == 'macOS' && 'sirius.app' || 'sirius' }}/
+#
+#      - name: Upload Distributions
+#        uses: actions/upload-artifact@v2
+#        with:
+#          retention-days: 1
+#          name: "sirius-${{ steps.sirius_version.outputs.value }}-${{ runner.os }}-x86-64-headless"
+#          path: |
+#            ~/.m2/repository/de/unijena/bioinf/ms/sirius/${{ steps.sirius_version.outputs.value }}/*.zip
+#            ~/.m2/repository/de/unijena/bioinf/ms/sirius/${{ steps.sirius_version.outputs.value }}/*.msi
+#            ~/.m2/repository/de/unijena/bioinf/ms/sirius/${{ steps.sirius_version.outputs.value }}/*.pkg
+#            ~/.m2/repository/de/unijena/bioinf/ms/sirius/${{ steps.sirius_version.outputs.value }}/*.deb
+#            ~/.m2/repository/de/unijena/bioinf/ms/sirius/${{ steps.sirius_version.outputs.value }}/*.sha256
 
 
 #  distService:
