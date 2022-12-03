@@ -13,7 +13,7 @@ jobs:
   distCLI:
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        os: [ ubuntu-latest ]
     runs-on: ${{ matrix.os }}
     env:
       GENERIC_INSTALLER_CERTIFICATE: ${{ secrets.GENERIC_INSTALLER_CERTIFICATE }}
@@ -618,36 +618,3 @@ jobs:
             sirius-${{ steps.sirius_version.outputs.value }}-Linux-x86-64-headless-img
             sirius-${{ steps.sirius_version.outputs.value }}-Windows-x86-64-headless-img
             sirius-${{ steps.sirius_version.outputs.value }}-macOS-x86-64-headless-img
-
-
-
-  release:
-    needs: [ distCLI, distGUI, distService, distMulti]
-#    needs: [ distCLI, distGUI, distMulti]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Inject slug/short variables
-        uses: rlespinasse/github-slug-action@v3.x
-      - name: Load Build properties
-        uses: Reedyuk/read-properties@v1.0.1
-        id: sirius_version
-        with:
-          path: './sirius_cli/src/main/resources/sirius_frontend.build.properties'
-          property: 'de.unijena.bioinf.siriusFrontend.version'
-      - uses: actions/download-artifact@v2
-        with:
-          path: sirius_dist/build/tmp/artifacts/
-      - name: Display downloaded artifact files
-        run: ls -lah
-        working-directory: sirius_dist/build/tmp/artifacts/
-      - uses: ncipollo/release-action@v1
-        with:
-          artifacts: "sirius_dist/build/tmp/artifacts/*/*"
-          body: "Prebuilt SIRIUS releases for all supported platforms. [Signed installers](https://github.com/bright-giant/sirius/releases) of this builds provided by [Bright Giant](https://bright-giant.com/) might be available [here](https://github.com/bright-giant/sirius/releases)."
-          name: "SIRIUS v${{ steps.sirius_version.outputs.value }}"
-          tag: "v${{ steps.sirius_version.outputs.value }}"
-          prerelease: ${{ endsWith(steps.sirius_version.outputs.value, '-SNAPSHOT') }}
-          allowUpdates: ${{ endsWith(steps.sirius_version.outputs.value, '-SNAPSHOT') }}
-          draft: ${{ env.GITHUB_REF_SLUG == 'stable' && 'false' || 'true' }}
-          token: ${{ secrets.GITHUB_TOKEN }}
