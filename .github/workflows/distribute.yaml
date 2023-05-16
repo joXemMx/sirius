@@ -376,6 +376,7 @@ jobs:
             ~/.m2/repository/de/unijena/bioinf/ms/sirius/${{ steps.sirius_version.outputs.value }}/*.sha256
 
   docker:
+      needs: [ distGUI ]
       strategy:
         matrix:
           os: [ ubuntu-latest ]
