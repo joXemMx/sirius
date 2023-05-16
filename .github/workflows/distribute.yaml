@@ -197,7 +197,7 @@ jobs:
   distGUI:
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        os: [ ubuntu-latest ]
     runs-on: ${{ matrix.os }}
     env:
       GENERIC_INSTALLER_CERTIFICATE: ${{ secrets.GENERIC_INSTALLER_CERTIFICATE }}
@@ -382,6 +382,7 @@ jobs:
           os: [ ubuntu-latest ]
       runs-on: ${{ matrix.os }}
       steps:
+        - uses: actions/checkout@v2
         - name: Load Build properties
           uses: Reedyuk/read-properties@v1.0.1
           id: sirius_version
