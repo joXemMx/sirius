@@ -392,7 +392,7 @@ jobs:
         - name: Download Artifact
           uses: actions/download-artifact@v2
           with:
-            name: "sirius-${{ steps.sirius_version.outputs.value }}-linux64.zip"
+            name: "sirius-${{ steps.sirius_version.outputs.value }}-Linux-x86-64.zip"
             path: sirius-artifact
         - name: List Artifact Contents
           run: ls sirius-artifact
