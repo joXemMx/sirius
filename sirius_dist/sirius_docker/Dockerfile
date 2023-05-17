@@ -10,6 +10,10 @@ WORKDIR /app
 # copy sirius from workflow
 COPY ./sirius-artifact/sirius/ .
 	
+# debug
+RUN ls
+RUN ls sirius
+	
 # ensure sirius can be run
 RUN chmod +x ./sirius/bin/sirius
 
