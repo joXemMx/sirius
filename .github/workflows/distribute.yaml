@@ -432,7 +432,7 @@ jobs:
             context: .
             file: ./sirius_dist/sirius_docker/Dockerfile
             push: true
-            tags: sirius-${{ steps.lowercase_version.outputs.lowercase_version }}
+            tags: joxem/test:sirius-${{ steps.lowercase_version.outputs.lowercase_version }}
             labels: ${{ steps.meta.outputs.labels }}
 #         - name: Build and push Docker image
 #           uses: docker/build-push-action@v4
