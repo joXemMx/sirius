@@ -375,7 +375,7 @@ jobs:
             ~/.m2/repository/de/unijena/bioinf/ms/sirius/${{ steps.sirius_version.outputs.value }}/*.deb
             ~/.m2/repository/de/unijena/bioinf/ms/sirius/${{ steps.sirius_version.outputs.value }}/*.sha256
 
-  docker:
+  dockerbuild:
       needs: [ distGUI ]
       strategy:
         matrix:
@@ -403,6 +403,24 @@ jobs:
         - name: Test Sirius
           run: ./sirius --help
           working-directory: sirius-artifact/sirius/bin
+        - name: Log in to Docker Hub
+          uses: docker/login-action@v2
+          with:
+            username: ${{ secrets.DOCKERHUB_USERNAME }}
+            password: ${{ secrets.DOCKERHUB_TOKEN }}
+        - name: Extract metadata (tags, labels) for Docker
+          id: meta
+          uses: docker/metadata-action@v4
+          with:
+            images: joxem/test
+        - name: Build and push Docker image
+          uses: docker/build-push-action@v4
+          with:
+            context: .
+            file: ./sirius_dist/sirius_docker/Dockerfile
+            push: true
+            tags: ${{ steps.meta.outputs.tags }}
+            labels: ${{ steps.meta.outputs.labels }}
 
 #   release:
 #     needs: [ distCLI, distGUI]
