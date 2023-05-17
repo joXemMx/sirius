@@ -420,13 +420,19 @@ jobs:
         - name: Test
           run: |
             docker run --rm test sirius --help
+        - name: Get lowercase version
+          id: lowercase_version
+          run: |
+            lowercase=$(echo "${{ steps.sirius_version.outputs.value }}" | tr '[:upper:]' '[:lower:]')
+            echo $lowercase
+            echo "lowercase_version=$lowercase" >> $GITHUB_OUTPUT
         - name: Build and push
           uses: docker/build-push-action@v4
           with:
             context: .
             file: ./sirius_dist/sirius_docker/Dockerfile
             push: true
-            tags: sirius-${{ steps.sirius_version.outputs.value | lower }}
+            tags: sirius-${{ steps.lowercase_version.outputs.lowercase_version }}
             labels: ${{ steps.meta.outputs.labels }}
 #         - name: Build and push Docker image
 #           uses: docker/build-push-action@v4
