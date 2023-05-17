@@ -418,6 +418,7 @@ jobs:
           with:
             context: .
             file: ./sirius_dist/sirius_docker/Dockerfile
+            build-args: WORKSPACE=$GITHUB_WORKSPACE
             push: true
             tags: ${{ steps.meta.outputs.tags }}
             labels: ${{ steps.meta.outputs.labels }}
