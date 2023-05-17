@@ -413,15 +413,10 @@ jobs:
           uses: docker/metadata-action@v4
           with:
             images: joxem/test
-        - name: echo variables
-          run: |
-            echo $GITHUB_WORKSPACE
-            echo $GITHUB_ENV
-            echo $PWD
         - name: Build and push Docker image
           uses: docker/build-push-action@v4
           with:
-            context: .
+            context: ./sirius-artifact/
             file: ./sirius_dist/sirius_docker/Dockerfile
             build-args: |
               WORKSPACE=${{ github.workspace }}
