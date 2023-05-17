@@ -400,9 +400,6 @@ jobs:
           run: |
             unzip sirius-${{ steps.sirius_version.outputs.value }}-linux64.zip
           working-directory: sirius-artifact/
-        - name: Test Sirius
-          run: ./sirius --help
-          working-directory: sirius-artifact/sirius/bin
         - name: Log in to Docker Hub
           uses: docker/login-action@v2
           with:
@@ -413,14 +410,32 @@ jobs:
           uses: docker/metadata-action@v4
           with:
             images: joxem/test
-        - name: Build and push Docker image
+        - name: Build and export to Docker
+          uses: docker/build-push-action@v4
+          with:
+            context: .
+            file: ./sirius_dist/sirius_docker/Dockerfile
+            load: true
+            tags: test
+        - name: Test
+          run: |
+            docker run -it test
+        - name: Build and push
           uses: docker/build-push-action@v4
           with:
             context: .
             file: ./sirius_dist/sirius_docker/Dockerfile
             push: true
-            tags: ${{ steps.meta.outputs.tags }}
+            tags: ${{ steps.sirius_version.outputs.value }}-01
             labels: ${{ steps.meta.outputs.labels }}
+#         - name: Build and push Docker image
+#           uses: docker/build-push-action@v4
+#           with:
+#             context: .
+#             file: ./sirius_dist/sirius_docker/Dockerfile
+#             push: true
+#             tags: ${{ steps.meta.outputs.tags }}
+#             labels: ${{ steps.meta.outputs.labels }}
 
 #   release:
 #     needs: [ distCLI, distGUI]
