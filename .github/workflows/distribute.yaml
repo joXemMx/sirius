@@ -426,7 +426,7 @@ jobs:
             context: .
             file: ./sirius_dist/sirius_docker/Dockerfile
             push: true
-            tags: ${{ steps.sirius_version.outputs.value }}-01
+            tags: sirius-${{ steps.sirius_version.outputs.value }}
             labels: ${{ steps.meta.outputs.labels }}
 #         - name: Build and push Docker image
 #           uses: docker/build-push-action@v4
