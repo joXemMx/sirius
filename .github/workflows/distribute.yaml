@@ -416,7 +416,7 @@ jobs:
         - name: Build and push Docker image
           uses: docker/build-push-action@v4
           with:
-            context: ./sirius-artifact/
+            context: ./sirius-artifact/sirius/
             file: ./sirius_dist/sirius_docker/Dockerfile
             build-args: |
               WORKSPACE=${{ github.workspace }}
