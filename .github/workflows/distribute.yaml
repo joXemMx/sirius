@@ -419,7 +419,7 @@ jobs:
             tags: test
         - name: Test
           run: |
-            docker run -it test
+            docker run --rm test
         - name: Build and push
           uses: docker/build-push-action@v4
           with:
