@@ -8,11 +8,7 @@ RUN mkdir -p app
 WORKDIR /app
 
 # copy sirius from workflow
-COPY ./sirius-artifact/sirius/ .
-	
-# debug
-RUN ls
-RUN ls sirius
+COPY ./sirius-artifact/ .
 	
 # ensure sirius can be run
 RUN chmod +x ./sirius/bin/sirius
