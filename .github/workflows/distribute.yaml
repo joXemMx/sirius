@@ -406,14 +406,13 @@ jobs:
           id: meta
           uses: docker/metadata-action@v4
           with:
-            images: joxem/test
+            images: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}
         - name: Build and export to Docker
           uses: docker/build-push-action@v4
           with:
             context: .
             file: ./sirius_dist/sirius_docker/Dockerfile
             load: true
-            tags: test
         - name: Test
           run: |
             docker run --rm test sirius --help
@@ -429,7 +428,7 @@ jobs:
             context: .
             file: ./sirius_dist/sirius_docker/Dockerfile
             push: true
-            tags: joxem/test:sirius-${{ steps.lowercase_version.outputs.lowercase_version }}
+            tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${{ steps.lowercase_version.outputs.lowercase_version }}
             labels: ${{ steps.meta.outputs.labels }}
 
 #   release:
