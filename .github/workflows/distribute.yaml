@@ -413,6 +413,7 @@ jobs:
             context: .
             file: ./sirius_dist/sirius_docker/Dockerfile
             load: true
+            tags: test
         - name: Test
           run: |
             docker run --rm test sirius --help
