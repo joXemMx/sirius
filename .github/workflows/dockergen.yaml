@@ -48,7 +48,7 @@ jobs:
       run: |
         mkdir tmp_output
 
-        docker run -v ./sirius_doc/manual/demo-data/mgf:/inputfolder -v ./tmp_output:/result --rm test \
+        docker run -v ${{ github.workspace }}/sirius_doc/manual/demo-data/mgf:/inputfolder -v ${{ github.workspace }}/tmp_output:/result --rm test \
         sirius login --user-env SIRIUS_USER --password-env SIRIUS_PW && \
         sirius --input ./inputfolder/laudanosine.mgf --output ./result formula -p orbitrap \
         fingerprint structure compound-classes write-summaries --output ./result
