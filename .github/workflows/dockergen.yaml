@@ -40,15 +40,15 @@ jobs:
         context: .
         file: ./sirius_dist/sirius_docker/Dockerfile
         load: true
-        tags: test
+        tags: test_container
     - name: Test sirius --help
       run: |
-        docker run --rm test sirius --help
-    - name: Test laudanosine example with login
+        docker run --rm test_container sirius --help
+    - name: Test ILP solver on laudanosine.mgf
       run: |
         mkdir tmp_output
 
-        docker run -v ${{ github.workspace }}/sirius_doc/manual/demo-data/mgf:/inputfolder -v ${{ github.workspace }}/tmp_output:/result --rm test \
+        docker run -v ${{ github.workspace }}/sirius_doc/manual/demo-data/mgf:/inputfolder -v ${{ github.workspace }}/tmp_output:/result --rm test_container \
         sirius --input ./inputfolder/laudanosine.mgf --output ./result formula -p orbitrap write-summaries --output ./result
 
         folder_path="./tmp_output/1_laudanosine_FEATURE_1/"
