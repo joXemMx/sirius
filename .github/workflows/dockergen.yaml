@@ -46,20 +46,20 @@ jobs:
         docker run --rm test sirius --help
     - name: Test laudanosine example with login
       run: |
-        mkdir test_output
+        mkdir tmp_output
 
-        docker run -v ./sirius_doc/manual/demo-data/mgf:/inputfolder -v ./test_output:/result --rm test \
+        docker run -v ./sirius_doc/manual/demo-data/mgf:/inputfolder -v ./tmp_output:/result --rm test \
         sirius login --user-env SIRIUS_USER --password-env SIRIUS_PW && \
         sirius --input ./inputfolder/laudanosine.mgf --output ./result formula -p orbitrap \
         fingerprint structure compound-classes write-summaries --output ./result
 
-        folder_path="./test_output/1_laudanosine_FEATURE_1/"
+        folder_path="./tmp_output/1_laudanosine_FEATURE_1/"
         if [ ! -d "$folder_path" ]; then
           echo "Folder does not exist: $folder_path"
           exit 1
         fi
 
-        folder_path="./test_output/1_laudanosine_FEATURE_1/fingerprints/"
+        folder_path="./tmp_output/1_laudanosine_FEATURE_1/fingerprints/"
         if [ ! -d "$folder_path" ]; then
           echo "Folder does not exist: $folder_path"
           exit 1
