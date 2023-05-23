@@ -49,7 +49,7 @@ jobs:
         mkdir tmp_output
 
         docker run -v ${{ github.workspace }}/sirius_doc/manual/demo-data/mgf:/inputfolder -v ${{ github.workspace }}/tmp_output:/result --rm test \
-        sh -c "sirius login --user-env SIRIUS_USER --password-env SIRIUS_PW && sirius --input ./inputfolder/laudanosine.mgf --output ./result formula -p orbitrap fingerprint structure compound-classes write-summaries --output ./result"
+        sirius --input ./inputfolder/laudanosine.mgf --output ./result formula -p orbitrap write-summaries --output ./result
 
         folder_path="./tmp_output/1_laudanosine_FEATURE_1/"
         if [ ! -d "$folder_path" ]; then
@@ -57,9 +57,9 @@ jobs:
           exit 1
         fi
 
-        folder_path="./tmp_output/1_laudanosine_FEATURE_1/fingerprints/"
-        if [ ! -d "$folder_path" ]; then
-          echo "Folder does not exist: $folder_path"
+        file_path="./tmp_output/1_laudanosine_FEATURE_1/fingerprints/formula_candidates.tsv"
+        if [ ! -d "$file_path" ]; then
+          echo "File does not exist: $file_path"
           exit 1
         fi
     - name: Get lowercase version
