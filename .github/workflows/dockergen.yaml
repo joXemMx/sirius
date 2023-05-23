@@ -58,7 +58,7 @@ jobs:
         fi
 
         file_path="./tmp_output/1_laudanosine_FEATURE_1/fingerprints/formula_candidates.tsv"
-        if [ ! -d "$file_path" ]; then
+        if [ ! -e "$file_path" ]; then
           echo "File does not exist: $file_path"
           exit 1
         fi
