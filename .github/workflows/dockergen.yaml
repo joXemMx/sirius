@@ -49,9 +49,7 @@ jobs:
         mkdir tmp_output
 
         docker run -v ${{ github.workspace }}/sirius_doc/manual/demo-data/mgf:/inputfolder -v ${{ github.workspace }}/tmp_output:/result --rm test \
-        sirius login --user-env SIRIUS_USER --password-env SIRIUS_PW && \
-        sirius --input ./inputfolder/laudanosine.mgf --output ./result formula -p orbitrap \
-        fingerprint structure compound-classes write-summaries --output ./result
+        sh -c "sirius login --user-env SIRIUS_USER --password-env SIRIUS_PW && sirius --input ./inputfolder/laudanosine.mgf --output ./result formula -p orbitrap fingerprint structure compound-classes write-summaries --output ./result"
 
         folder_path="./tmp_output/1_laudanosine_FEATURE_1/"
         if [ ! -d "$folder_path" ]; then
